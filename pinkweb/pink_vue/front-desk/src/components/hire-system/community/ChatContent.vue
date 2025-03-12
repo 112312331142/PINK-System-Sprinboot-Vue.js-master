@@ -46,8 +46,46 @@
       }
     },
     methods: {
-      onSubmit() {
-        alert(this.communication.text)
+      async onSubmit() {
+        // 如果消息为空，不发送
+        if (!this.communication.text.trim()) {
+          return;
+        }
+
+        try {
+          // 发送消息到后端
+          const response = await this.$http.post('http://localhost:8085/message/sendHr', {
+            data: {
+              u_id: this.box.id,                     // 接收方用户id
+              p_id: localStorage.getItem('r_id'),    // 发送方(HR)id
+              message: this.communication.text        // 消息内容
+            }
+          });
+
+          if (response.data === "Message received successfully") {
+            // 发送成功后，在本地添加新消息
+            const newMessage = {
+              m_id: Date.now().toString(),
+              m_flag: 1,                    // HR发送的消息
+              m_s_id: localStorage.getItem('r_id'),
+              m_r_id: this.box.id,
+              m_time: new Date().toISOString().slice(0, 19).replace('T', ' '),
+              m_content: this.communication.text
+            };
+
+            // 添加到聊天记录中
+            this.box.communities.push(newMessage);
+            
+            // 重新排序消息
+            this.getNew(this.box.communities);
+            
+            // 清空输入框
+            this.communication.text = '';
+          }
+        } catch (error) {
+          console.log("发送消息失败：", error);
+          this.$message.error('发送消息失败，请重试');
+        }
       },
       // 重新按时间对聊天内容排序
       getNew(communities) {

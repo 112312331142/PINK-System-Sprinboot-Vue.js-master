@@ -11,6 +11,11 @@
           </el-button>
         </span>
         <span>
+          <el-button type="primary" size="small" class="feature-btn" @click="accept()">
+            <i class="el-icon-plus"></i>接受
+          </el-button>
+        </span>
+        <span>
           <el-button type="danger" size="small" class="feature-btn">
             <i class="el-icon-close"></i>删除
           </el-button>
@@ -37,7 +42,9 @@
                   </el-select>
                 </el-form-item>
                 <el-form-item label="岗位地址">
-                  <el-cascader v-model="new_position.r_address" :options="cities" :props="{expandTrigger: 'hover'}" :placeholder="new_position.r_address" class="cascader-col" @change="handleChange"></el-cascader>
+                  <el-cascader v-model="new_position.r_address" :options="cities" :props="{ expandTrigger: 'hover' }"
+                    :placeholder="new_position.r_address" class="cascader-col" @change="handleChange">
+                  </el-cascader>
 
                 </el-form-item>
                 <el-form-item label="工作经验">
@@ -67,10 +74,12 @@
             <el-col :span="12">
               <div class="right-sub-content">
                 <el-form-item label="岗位福利">
-                  <el-input type="textarea" v-model="new_position.r_tag" :autosize="{ minRows: 3, maxRows: 3}"></el-input>
+                  <el-input type="textarea" v-model="new_position.r_tag"
+                    :autosize="{ minRows: 3, maxRows: 3 }"></el-input>
                 </el-form-item>
                 <el-form-item label="其他介绍">
-                  <el-input type="textarea" v-model="new_position.r_introduction" :autosize="{ minRows: 3, maxRows: 3}"></el-input>
+                  <el-input type="textarea" v-model="new_position.r_introduction"
+                    :autosize="{ minRows: 3, maxRows: 3 }"></el-input>
                 </el-form-item>
                 <!-- <el-form-item label="创建时间">
                   <el-date-picker v-model="new_position.created_time" type="date" placeholder="选择日期" disabled="true" class="date-picker"></el-date-picker>
@@ -92,22 +101,21 @@
         </div>
       </el-dialog>
       <div class="info-table">
-        <el-table ref="multipleTable" :data="table_data"
-                  tooltip-effect="dark" style="width: 100%"
-                  highlight-current-row :default-sort = "{prop: 'r_name', order: 'descending'}">
-          <el-table-column type="selection" width="60"/>
-          <el-table-column prop="r_id" label="ID" width="80"/>
-          <el-table-column prop="r_name" label="岗位名称" width="150" sortable/>
-          <el-table-column prop="r_address" label="所在城市" width="150" sortable/>
-          <el-table-column prop="r_experience" label="工作经验" width="150" sortable/>
-          <el-table-column prop="r_education" label="学历要求" width="160" sortable/>
-          <el-table-column prop="created_time" label="发布时间" width="200" sortable/>
+        <el-table ref="multipleTable" :data="table_data" tooltip-effect="dark" style="width: 100%" highlight-current-row
+          :default-sort="{ prop: 'r_name', order: 'descending' }">
+          <el-table-column type="selection" width="60" />
+          <el-table-column prop="r_id" label="ID" width="80" />
+          <el-table-column prop="r_name" label="岗位名称" width="150" sortable />
+          <el-table-column prop="r_address" label="所在城市" width="150" sortable />
+          <el-table-column prop="r_experience" label="工作经验" width="150" sortable />
+          <el-table-column prop="r_education" label="学历要求" width="160" sortable />
+          <el-table-column prop="created_time" label="发布时间" width="200" sortable />
           <!-- <el-table-column prop="r_introduction" label="备注" width="210" sortable/> -->
           <el-table-column fixed="right" label="操作" width="130">
             <template slot-scope="scope">
-             <el-button @click="detailClick(scope.row)" type="text" size="small">详情</el-button>
-              <el-popconfirm title="确定删除？"
-              @confirm="deleteClick(scope.row)">
+              <el-button @click="detailClick(scope.row)" type="text" size="small">详情</el-button>
+
+              <el-popconfirm title="确定删除？" @confirm="deleteClick(scope.row)">
                 <el-button slot="reference" type="text" size="small">删除</el-button>
               </el-popconfirm>
             </template>
@@ -115,14 +123,9 @@
         </el-table>
       </div>
       <div class="table-foot">
-       <el-pagination background
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-             :current-page.sync="pageNow"
-             :page-size="size"
-             layout="total, prev, pager, next"
-             :total="total">
-             </el-pagination>
+        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
+          :current-page.sync="pageNow" :page-size="size" layout="total, prev, pager, next" :total="total">
+        </el-pagination>
       </div>
     </div>
   </div>
@@ -130,15 +133,16 @@
 
 <script>
 // 导入城市信息
-import {provinceAndCityDataPlus,CodeToText} from 'element-china-area-data'
+import { provinceAndCityDataPlus, CodeToText } from 'element-china-area-data'
 // 导入PageTitle模块
 import PageTitle from "../../components/hire-system/title/PageTitle";
+
 export default {
   name: "release",
-  components: {PageTitle},
+  components: { PageTitle },
   data() {
     return {
-        //每页显示的条数
+      //每页显示的条数
       size: 8,
       //总条数
       total: 0,
@@ -149,7 +153,7 @@ export default {
       tipsVisible: false,
       // 新建岗位
       new_position: {
-        ehrid:"",
+        ehrid: "",
         r_name: "",
         r_salary: "",
         r_address: "",
@@ -161,66 +165,66 @@ export default {
       },
       // 列表岗位信息
       table_data: [],
-      province:"",
-      city:"",
-      ehr_id:5101
+      province: "",
+      city: "",
+      ehr_id: 5101
     }
   },
 
   methods: {
-     handleChange(val) {
-        this.province=CodeToText[val[0]];
-        this.city=CodeToText[val[1]];
-       console.log(this.province);
-       console.log(this.city);
-       if(this.city==null||this.city==="市辖区"||this.city==="全部"){
-            this.new_position.r_address=this.province
-       }else{
-           this.new_position.r_address=this.province+"/"+this.city
-       }
-       console.log(this.new_position.r_address)
+    handleChange(val) {
+      this.province = CodeToText[val[0]];
+      this.city = CodeToText[val[1]];
+      console.log(this.province);
+      console.log(this.city);
+      if (this.city == null || this.city === "市辖区" || this.city === "全部") {
+        this.new_position.r_address = this.province
+      } else {
+        this.new_position.r_address = this.province + "/" + this.city
+      }
+      console.log(this.new_position.r_address)
     },
-    postNewPosition(){
-    this.tipsVisible = true;
-    this.new_position.ehrid=this.ehrid;
-     switch(this.new_position.r_salary){
-           case"3K以下":
-              this.new_position.r_salary=3000;
-               break;
-           case"3-5K":
-              this.new_position.r_salary=4000;break;
-           case"5-10K":
-               this.new_position.r_salary=7500;break;
-           case"10-15K":
-               this.new_position.r_salary=12500;break;
-           case"15-20K":
-               this.new_position.r_salary=17500;break;
-           case"20-30K":
-               this.new_position.r_salary=25000;break;
-           case"30-50K":
-               this.new_position.r_salary=40000;break;
-           case"50K以上":
-               this.new_position.r_salary=50000;break;
-           default:
-              break;
-    };
-    console.log(this.new_position);
-     this.$http.post('http://localhost:8085/hire/hire_release/insert',
+    postNewPosition() {
+      this.tipsVisible = true;
+      this.new_position.ehrid = this.ehrid;
+      switch (this.new_position.r_salary) {
+        case "3K以下":
+          this.new_position.r_salary = 3000;
+          break;
+        case "3-5K":
+          this.new_position.r_salary = 4000; break;
+        case "5-10K":
+          this.new_position.r_salary = 7500; break;
+        case "10-15K":
+          this.new_position.r_salary = 12500; break;
+        case "15-20K":
+          this.new_position.r_salary = 17500; break;
+        case "20-30K":
+          this.new_position.r_salary = 25000; break;
+        case "30-50K":
+          this.new_position.r_salary = 40000; break;
+        case "50K以上":
+          this.new_position.r_salary = 50000; break;
+        default:
+          break;
+      };
+      console.log(this.new_position);
+      this.$http.post('http://localhost:8085/hire/hire_release/insert',
         {
 
-            ehrid:localStorage.getItem("r_id"),
-            r_name:this.new_position.r_name,
-            r_salary:this.new_position.r_salary,
-            r_address:this.new_position.r_address,
-            r_experience:this.new_position.r_experience,
-            r_education:this.new_position.r_education,
-            r_introduction:this.new_position.r_introduction,
-            r_tag:this.new_position.r_tag,
+          ehrid: localStorage.getItem("r_id"),
+          r_name: this.new_position.r_name,
+          r_salary: this.new_position.r_salary,
+          r_address: this.new_position.r_address,
+          r_experience: this.new_position.r_experience,
+          r_education: this.new_position.r_education,
+          r_introduction: this.new_position.r_introduction,
+          r_tag: this.new_position.r_tag,
 
-        }).then((response)=>{
-           console.log(response);
-           location.reload();
-       })
+        }).then((response) => {
+          console.log(response);
+          location.reload();
+        })
     },
     detailClick(index) {
       this.$router.push({
@@ -232,88 +236,88 @@ export default {
     },
     deleteClick(index) {
       console.log(index);
-       this.$http.get('http://localhost:8085/hire/hire_release/delete/'+index.r_id)
-      .then(function (response) {
+      this.$http.get('http://localhost:8085/hire/hire_release/delete/' + index.r_id)
+        .then(function (response) {
 
-      for(var len = 0;len<response.data.length;len++){
+          for (var len = 0; len < response.data.length; len++) {
+            _this.table_data.push(response.data[len])
 
-        _this.table_data.push(response.data[len])
 
-
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
       location.reload();
-  },
-   handleSizeChange(size){
-          console.log("当每页条数改变时"+size);
-          this.size = size;
-          this.findAll(this.pageNow, this.size)
+    },
+    handleSizeChange(size) {
+      console.log("当每页条数改变时" + size);
+      this.size = size;
+      this.findAll(this.pageNow, this.size)
 
-        },
-  handleCurrentChange(){
-      console.log("当前页面"+this.pageNow);
+    },
+    handleCurrentChange() {
+      console.log("当前页面" + this.pageNow);
 
       this.findAll(this.pageNow, this.size)
 
-        },
-       findAll(page, size){
-          var that = this
-          this.$http.get('http://localhost:8085/hire/hire_release/'+this.ehr_id,{
-            params:{
-              pageNow: this.pageNow,
-              pageSize: this.size
-            }
-          })
-       .then(function (response) {
+    },
+    findAll(page, size) {
+      var that = this
+      this.$http.get('http://localhost:8085/hire/hire_release/' + this.ehr_id, {
+        params: {
+          pageNow: this.pageNow,
+          pageSize: this.size
+        }
+      })
+        .then(function (response) {
 
           that.table_data = []
-          for(var len = (that.pageNow-1)*that.size ;len<=that.pageNow*that.size-1;len++){
-            if(len>=response.data.list.length){
+          for (var len = (that.pageNow - 1) * that.size; len <= that.pageNow * that.size - 1; len++) {
+            if (len >= response.data.list.length) {
               break;
             }
-             that.table_data[len]=response.data.list[len];
-             that.table_data[len].created_time=that.table_data[len].created_time.substring(0,10);
-            }
-           that.total=response.data.total
+            that.table_data[len] = response.data.list[len];
+            that.table_data[len].created_time = that.table_data[len].created_time.substring(0, 10);
+          }
+          that.total = response.data.total
 
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-        },
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
   },
   created() {
     const _this = this
-    this.$http.get('http://localhost:8085/hire/hire_release/'+localStorage.getItem("r_id"),{params:{
-              pageNow: 1,
-              pageSize: 4
-            }
-          })
+    this.$http.get('http://localhost:8085/hire/hire_release/' + localStorage.getItem("r_id"), {
+      params: {
+        pageNow: 1,
+        pageSize: 4
+      }
+    })
       .then(function (response) {
         console.log(response)
         // _this.ehrid=response.data.list[0].ehrid;
         // console.log( _this.ehrid);
-      for(var len = 0;len<4;len++){
+        for (var len = 0; len < 4; len++) {
 
-        _this.table_data.push(response.data.list[len]);
-        _this.table_data[len].created_time=_this.table_data[len].created_time.substring(0,10);
+          _this.table_data.push(response.data.list[len]);
+          _this.table_data[len].created_time = _this.table_data[len].created_time.substring(0, 10);
         }
-        _this.total=response.data.total
+        _this.total = response.data.total
       })
       .catch(function (error) {
         console.log(error);
       })
-      },
+  },
   mounted() {
     const date = new Date();
     const myDate = date.toLocaleDateString();
     this.new_position.created_time = myDate
   },
-  if(tipsVisible=true){
-         this.postNewPosition();
+  if(tipsVisible = true) {
+    this.postNewPosition();
   }
 }
 </script>

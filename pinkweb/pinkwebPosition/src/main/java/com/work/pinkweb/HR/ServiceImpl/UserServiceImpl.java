@@ -11,10 +11,11 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+
     @Override
     public Integer updateAvatarById(Integer uid, String avatar) {
 
-        return userMapper.updateAvatarById(uid,avatar);
+        return userMapper.updateAvatarById(uid, avatar);
     }
 
     @Override

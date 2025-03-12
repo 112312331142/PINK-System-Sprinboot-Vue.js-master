@@ -17,14 +17,14 @@ import { mapMutations } from "vuex";
 import LoginBody from "../../../components/premise/LoginBody";
 export default {
   name: "admin_login",
-  components: {LoginBody},
+  components: { LoginBody },
   data() {
     return {
       admin_account: '',
       admin_pwd: ''
     }
   },
-  methods:{
+  methods: {
     ...mapMutations(["changeLogin"]),
     onSubmit() {
       let v = this;

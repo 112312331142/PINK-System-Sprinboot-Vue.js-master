@@ -15,6 +15,24 @@ spring:
       file-size-threshold: 2KB # 文件写入磁盘的阈值
       max-file-size: 100MB
       max-request-size: 215MB # 最大请求值大小
+  ai:
+    openai:
+      base-url: https://api.siliconflow.cn/
+      api-key: sk-dobvageguyfakmwdiwkjiwjtogauaxrwioebmckfiqpptchs
+      chat:
+        options:
+          model: deepseek-ai/DeepSeek-V3
+logging:
+  level:
+    org:
+      springframework:
+        ai:
+          chat:
+            client:
+              advisor: DEBUG
+
+logging.level.org.springframework.ai.chat.client.advisor: DEBUG
+
 
 
 mybatis:

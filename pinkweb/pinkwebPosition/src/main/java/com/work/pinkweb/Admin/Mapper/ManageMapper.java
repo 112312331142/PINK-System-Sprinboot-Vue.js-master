@@ -1,14 +1,20 @@
 package com.work.pinkweb.Admin.Mapper;
 
 import com.work.pinkweb.Entity.Admin;
-import com.work.pinkweb.Entity.Resume;
 import com.work.pinkweb.Entity.User;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Update;
 
+
+//@Mapper
+//@Repository
 @Mapper
 @Repository
 public interface ManageMapper {
@@ -22,6 +28,7 @@ public interface ManageMapper {
     @Select("select * from user where type = 0")
     List<User> manageGetAllUser();
 
+    // 通过名字查询用户
     @Select("select * from user where name like CONCAT(CONCAT('%',#{name}),'%')")
     List<User> getUserByName(String name);
 
@@ -48,10 +55,17 @@ public interface ManageMapper {
     @Select("select * from admin where admin_account = #{admin_account}")
     List<Admin> getAdminByAccount(String admin_account);
 
-    @Select("SELECT count(*) FROM user WHERE TO_DAYS( NOW( ) ) - TO_DAYS( created_time) < #{i} && TO_DAYS( NOW( ) ) - TO_DAYS( created_time) >= (#{i}-1)")
+    @Select("SELECT count(*) FROM user WHERE TO_DAYS( NOW( ) ) - TO_DAYS( created_time) < #{i} && " +
+            "TO_DAYS( NOW( ) ) - TO_DAYS( created_time) >= (#{i}-1)")
     Integer userChange(Integer i);
+    //   SELECT count(*)
+    //   FROM user
+    //   WHERE TO_DAYS(NOW()) - TO_DAYS(created_time) < #{i}
+    //     AND TO_DAYS(NOW()) - TO_DAYS(created_time) >= (#{i} - 1)
+    //
 
 
-    @Select("SELECT count(*) FROM enterprise_info WHERE TO_DAYS( NOW( ) ) - TO_DAYS( created_time) < #{i} && TO_DAYS( NOW( ) ) - TO_DAYS( created_time) >= (#{i}-1)")
+    @Select("SELECT count(*) FROM enterprise_info WHERE TO_DAYS( NOW( ) ) - TO_DAYS( created_time) < #{i} && " +
+            "TO_DAYS( NOW( ) ) - TO_DAYS( created_time) >= (#{i}-1)")
     Integer companyChange(Integer i);
 }

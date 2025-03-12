@@ -17,10 +17,10 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     RecruitmentMapper recruitmentMapper;
 
     @Override
-    public PageInfo<Recruitment> getRecruitmentByEhrid(Integer pageIndex,Integer pageSize,Integer ehrid) {
-        PageHelper.startPage(pageIndex,pageSize);
-        List<Recruitment> list=recruitmentMapper.getRecruitmentByEhrid(ehrid);
-        PageInfo<Recruitment> plist=new PageInfo<>(list);
+    public PageInfo<Recruitment> getRecruitmentByEhrid(Integer pageIndex, Integer pageSize, Integer ehrid) {
+        PageHelper.startPage(pageIndex, pageSize);
+        List<Recruitment> list = recruitmentMapper.getRecruitmentByEhrid(ehrid);
+        PageInfo<Recruitment> plist = new PageInfo<>(list);
         return plist;
     }
 
@@ -37,7 +37,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
     @Override
     public Recruitment getRecruitmentAppByRid(Integer r_id) {
-        Recruitment recruitment=recruitmentMapper.getRecruitmentAppByRid(r_id);
+        Recruitment recruitment = recruitmentMapper.getRecruitmentAppByRid(r_id);
 
         recruitment.setApplyNum(recruitment.getApplyList().size());
 

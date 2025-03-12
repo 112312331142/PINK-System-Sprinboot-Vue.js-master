@@ -64,33 +64,44 @@
     </resultMap>
 
     <select id="getAllApply" resultMap="ApplyEntityMap">
-        select  a.*,c.c_fdegree,c.c_fschool,c.c_sdegree,c.c_sschool,c.c_exsalary,ri.r_name,ri.ehrid,u.name,ri.r_id
+        select a.*,
+               c.c_fdegree,
+               c.c_fschool,
+               c.c_sdegree,
+               c.c_sschool,
+               c.c_exsalary,
+               ri.r_name,
+               ri.ehrid,
+               u.name,
+               ri.r_id
         from apply a
-                 left join candidate c on a.u_id=c.c_id
-                 left join recruitment_info ri on a.p_id=ri.r_id
-                 left join user u on a.u_id=u.id
-        where ehrid=#{ehrid}
+                 left join candidate c on a.u_id = c.c_id
+                 left join recruitment_info ri on a.p_id = ri.r_id
+                 left join user u on a.u_id = u.id
+        where ehrid = #{ehrid}
     </select>
 
     <delete id="deleteApplyById" parameterType="int">
 
-        delete  from apply where
-            apply_id =#{apply_id}
+        delete
+        from apply
+        where apply_id = #{apply_id}
     </delete>
     <select id="getCandidateByApply" resultMap="ApplyEntityMap">
-        select  a.*,u.*,c.*,r.url
-        from apply  a
-                 left JOIN   candidate c  on c.c_id=a.u_id
-                 left JOIN   user u on u.id=a.u_id
-                 left  join resume r on r.resume_id=a.r_id
-        where apply_id=#{apply_id}
+        select a.*, u.*, c.*, r.url
+        from apply a
+                 left JOIN candidate c on c.c_id = a.u_id
+                 left JOIN user u on u.id = a.u_id
+                 left join resume r on r.resume_id = a.r_id
+        where apply_id = #{apply_id}
     </select>
+
     <select id="getLineByDate" resultMap="ApplyEntityMap">
-        select * from apply where  created_time like CONCAT(CONCAT('%',#{param1}),'%') and p_id=#{param2}
+        select *
+        from apply
+        where created_time like CONCAT(CONCAT('%', #{param1}), '%')
+          and p_id = #{param2}
     </select>
-
-
-
 
 
 </mapper>

@@ -19,7 +19,7 @@
             <el-col :span="18">
               <div class="screen-content">
                 <span>公司地点：</span>
-                <span v-for="city in cities" class="city">
+                <span v-for="(city, index) in cities" :key="index" class="city">
                   <el-button type="text" class="screen-btn" @click="citySearch(city)">{{city}}</el-button>
                 </span>
               </div>
@@ -30,7 +30,7 @@
             <el-col :span="18">
               <div class="screen-content">
                 <span>行业类型：</span>
-                <span v-for="type in types" class="screen">
+                <span v-for="(type, index) in types" :key="index" class="screen">
                   <el-button type="text" class="screen-btn" @click="typeSearch(type)">{{type}}</el-button>
                 </span>
               </div>
@@ -41,7 +41,7 @@
             <el-col :span="18">
               <div class="screen-content">
                 <span>公司规模：</span>
-                <span v-for="scale in scales" class="screen">
+                <span v-for="(scale, index) in scales" :key="index" class="screen">
                   <el-button type="text" class="screen-btn" @click="scaleSearch(scale)">{{scale}}</el-button>
                 </span>
               </div>

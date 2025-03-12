@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.work.pinkweb.Admin.Service.ManageService;
 import com.work.pinkweb.Entity.Admin;
 import com.work.pinkweb.Entity.User;
+import com.work.pinkweb.utils.Md5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ public class ManageController {
     @Autowired
     private ManageService manageService;
 
-    //求职者登录
+    // 管理者登录
     @RequestMapping(value = "/premise/admin_login", method = RequestMethod.POST)
     @ResponseBody
     public String adminLogin(@RequestBody Map<String, Map> para) throws JsonProcessingException {
@@ -37,14 +38,16 @@ public class ManageController {
 
     //用户管理
     @PostMapping("/admin/manage_user/getAllUser")
-    public PageInfo<User> getUserByCondition(@RequestBody Map<String, Map> para,
-                                             @RequestParam(value = "key", required = false) String key,
-                                             @RequestParam(value = "flag", required = false) String flag) {
+    public PageInfo<User> getUserByCondition(
+            @RequestBody Map<String, Map> para,
+            @RequestParam(value = "key", required = false) String key,
+            @RequestParam(value = "flag", required = false) String flag) {
         Integer pageIndex = Integer.valueOf(para.get("params").get("pageNow").toString());
         Integer pageSize = Integer.valueOf(para.get("params").get("pageSize").toString());
         return manageService.getUserByCondition(pageIndex, pageSize, key, flag);
     }
 
+    // 删除用户
     @RequestMapping("/admin/manage_user/delete/{e_id}")
     public String manageDeleteUser(@PathVariable String e_id) {
         return manageService.manageDeleteUser(Integer.valueOf(e_id));
@@ -63,10 +66,13 @@ public class ManageController {
         return manageService.getAdminByCondition(pageIndex, pageSize, key, flag);
     }
 
+    // 管理员增加用户
     @RequestMapping("/admin/manage_admin/add")
     public String manageAddUser(@RequestBody Map<String, Map> para) throws ParseException {
         String admin_account = para.get("params").get("admin_account").toString();
         String admin_pwd = para.get("params").get("admin_pwd").toString();
+        // 使用MD5加密算法
+        admin_pwd = Md5Util.getMD5String(admin_pwd);
         String admin_name = para.get("params").get("admin_name").toString();
         Integer admin_power = Integer.valueOf(para.get("params").get("admin_power").toString());
         String apartment = para.get("params").get("apartment").toString();
@@ -78,6 +84,7 @@ public class ManageController {
     }
 
 
+    // 管理员编辑用户
     @RequestMapping(value = "/admin/manage_admin/edit", method = RequestMethod.POST)
     @ResponseBody
     public String manageEditUser(@RequestBody Map<String, Map> para) {
@@ -90,6 +97,7 @@ public class ManageController {
         return manageService.manageEditUser(admin_id, admin_name, admin_pwd, admin_power);
     }
 
+    //
     @RequestMapping("/admin/admin_home/userChange")
     public List userChange() {
         return manageService.userChange();

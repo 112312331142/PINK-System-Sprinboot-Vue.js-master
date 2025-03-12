@@ -12,9 +12,10 @@ import java.util.List;
 public class CompanyHrServiceImpl implements CompanyHrService {
     @Autowired
     private CompanyHrMapper companyHrMapper;
+
     @Override
     public List<CompanyHr> getCompanyHrAllInfo(Integer ehrid) {
-        List<CompanyHr> list=companyHrMapper.getCompanyHrAllInfo(ehrid);
+        List<CompanyHr> list = companyHrMapper.getCompanyHrAllInfo(ehrid);
         for (int i = 0; i < list.size(); i++) {
             list.get(i).setEhr_currentaccount(list.get(i).getRecruitmentList().size());
         }
@@ -22,7 +23,7 @@ public class CompanyHrServiceImpl implements CompanyHrService {
     }
 
     @Override
-    public Integer updateHrInfo(Integer ehr_id,String ehr_vx, String ehr_position) {
+    public Integer updateHrInfo(Integer ehr_id, String ehr_vx, String ehr_position) {
         return companyHrMapper.updateHrInfo(ehr_id, ehr_vx, ehr_position);
     }
 

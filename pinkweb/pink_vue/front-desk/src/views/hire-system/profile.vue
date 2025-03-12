@@ -9,11 +9,12 @@
           <div class="avatar-col">
             <ul class="profile-bg">
               <li class="relative">
-                <span class="occupy" @mouseover="mouseOver" @mouseout="mouseOut" @click="editAvatarDialog = true">修改</span>
+                <span class="occupy" @mouseover="mouseOver" @mouseout="mouseOut"
+                  @click="editAvatarDialog = true">修改</span>
                 <img :src="avatarUrl" alt="" class="personal-img" style="border-radius: 50%">
               </li>
-              <li class="user-name">{{user.user.name}}</li>
-              <li class="company-name">{{company.e_name}}</li>
+              <li class="user-name">{{ user.user.name }}</li>
+              <li class="company-name">{{ company.e_name }}</li>
               <li class="edit-col">
                 <span style="cursor: pointer" @click="editVisible = true">编辑</span>
               </li>
@@ -25,7 +26,7 @@
                 <el-col :span="8">
                   <div class="box-content">
                     <ul>
-                      <li class="box-num">{{user.ehr_currentaccount}}</li>
+                      <li class="box-num">{{ user.ehr_currentaccount }}</li>
                       <li class="box-title">已发布</li>
                     </ul>
                   </div>
@@ -52,15 +53,15 @@
               <ul>
                 <li class="info-li">
                   <span class="info-title">工号：</span>
-                  <span class="info-body">{{user.ehr_jobnum}}</span>
+                  <span class="info-body">{{ user.ehr_jobnum }}</span>
                 </li>
                 <li class="info-li">
                   <span class="info-title">职位：</span>
-                  <span class="info-body">{{user.ehr_position}}</span>
+                  <span class="info-body">{{ user.ehr_position }}</span>
                 </li>
                 <li class="info-li">
                   <span class="info-title">微信：</span>
-                  <span class="info-body">{{user.ehr_vx }}</span>
+                  <span class="info-body">{{ user.ehr_vx }}</span>
                 </li>
               </ul>
             </div>
@@ -78,18 +79,18 @@
                     <li>
                       <el-row>
                         <el-col :span="6">
-                          <img :src="'http://localhost:8085/companyAvatar/'+company.e_logo" alt="" class="company-logo">
+                          <img :src="'http://localhost:8085/companyAvatar/' + company.e_logo" alt="" class="company-logo">
                         </el-col>
                         <el-col :span="18">
                           <ul class="company-title">
-                            <li class="company-title-cn">{{company.e_name}}</li>
+                            <li class="company-title-cn">{{ company.e_name }}</li>
                           </ul>
                         </el-col>
                       </el-row>
                     </li>
                     <li class="info-li">
                       <span class="info-title">工商注册号：</span>
-                      <span class="info-body" style="margin-left: 5px">1000000{{company.e_id}}</span>
+                      <span class="info-body" style="margin-left: 5px">1000000{{ company.e_id }}</span>
                     </li>
                     <li class="info-li">
                       <span class="info-title">人事部电话：</span>
@@ -113,7 +114,7 @@
                             </div>
                           </el-col>
                           <el-col :span="8">
-                            <div class="box-num_1">{{company.companyHrList[0].ehr_currentaccount}}</div>
+                            <div class="box-num_1">{{ company.companyHrList[0].ehr_currentaccount }}</div>
                           </el-col>
                         </el-row>
                       </div>
@@ -130,7 +131,7 @@
                             </div>
                           </el-col>
                           <el-col :span="8">
-                            <div class="box-num_1">{{company.companyHrList[0].hr_account}}</div>
+                            <div class="box-num_1">{{ company.companyHrList[0].hr_account }}</div>
                           </el-col>
                         </el-row>
                       </div>
@@ -140,22 +141,17 @@
               </el-col>
             </el-row>
           </div>
-            <div class="right-bottom">
-              <div class="rt-title rb-special">招募折线 Recruitment-Line</div>
-              <div id="bar_dv" ref="chart" :style="{width: '100%', height: '300px'}"></div>
-            </div>
+          <div class="right-bottom">
+            <div class="rt-title rb-special">招募热线 Recruitment-Line</div>
+            <div id="bar_dv" ref="chart" :style="{ width: '100%', height: '300px' }"></div>
+          </div>
         </div>
       </el-col>
     </el-row>
     <el-dialog title="修改头像" :visible.sync="editAvatarDialog" width="30%">
       <div class="upload-div">
-        <el-upload
-          ref="upload"
-          action="http://localhost:8085/hire/hire_profile/avatar"
-          :data="uploadData"
-          list-type="picture-card"
-          :limit="1"
-          :on-remove="handleRemove">
+        <el-upload ref="upload" action="http://localhost:8085/hire/hire_profile/avatar" :data="uploadData"
+          list-type="picture-card" :limit="1" :on-remove="handleRemove">
           <i class="el-icon-plus"></i>
         </el-upload>
         <el-dialog :visible.sync="dialogVisible">
@@ -164,7 +160,7 @@
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="editAvatarDialog = false">取 消</el-button>
-        <el-button type="primary" @click="editAvatarDialog = false,handleUpload ()">确 定</el-button>
+        <el-button type="primary" @click="editAvatarDialog = false, handleUpload()">确 定</el-button>
       </div>
     </el-dialog>
     <el-dialog title="基本信息编辑" :visible.sync="editVisible">
@@ -233,15 +229,15 @@ import PageTitle from "../../components/hire-system/title/PageTitle";
 
 export default {
   name: "profile",
-  components: {PageTitle},
+  components: { PageTitle },
   data() {
     return {
-      uploadData:{
-        ehrid:localStorage.getItem("r_id")
+      uploadData: {
+        ehrid: localStorage.getItem("r_id")
       },
       // 近10天日期
       dates: [],
-      newdates:[],
+      newdates: [],
       // 近10天招聘人数
       nums: [20, 12, 24, 50, 12, 3, 1, 10, 14, 30],
       editAvatarDialog: false,
@@ -269,15 +265,15 @@ export default {
   mounted() {
     // this.drawLine();
     const _this = this
-      this.nums = []
-      for (let i = -9; i <= 0; i ++) {
-        this.dates.push(this.getDay(i))
-      }
-      this.newdates=qs.stringify(this.dates, { arrayFormat: 'repeat' })
-      this.$http.get('http://localhost:8085/hire/attract_detail/applyCompanyChange/'+localStorage.getItem("r_id"))
+    this.nums = []
+    for (let i = -9; i <= 0; i++) {
+      this.dates.push(this.getDay(i))
+    }
+    this.newdates = qs.stringify(this.dates, { arrayFormat: 'repeat' })
+    this.$http.get('http://localhost:8085/hire/attract_detail/applyCompanyChange/' + localStorage.getItem("r_id"))
       .then(function (response) {
 
-        for(var len = 0;len<response.data.length;len++){
+        for (var len = 0; len < response.data.length; len++) {
           _this.nums.push(response.data[len])
         }
         _this.drawLine();
@@ -288,13 +284,13 @@ export default {
   },
   methods: {
     submitUpload() {
-			this.$refs.upload.submit();
-           location.reload();
-		},
-    handleUpload () {
-			this.submitUpload()
+      this.$refs.upload.submit();
+      location.reload();
+    },
+    handleUpload() {
+      this.submitUpload()
 
-		},
+    },
     mouseOver: function () {
       const dom = document.getElementsByClassName("occupy")
       dom[0].style.opacity = 1
@@ -345,59 +341,60 @@ export default {
             smooth: true
           }]
         })
-        },500)
-      },
-      // 获取近15日时间
-      doHandleMonth(month){
-        let m = month;
-        if(month.toString().length === 1){
-          m = "0" + month;
-        }
-        return m;
-      },
-      getDay(day){
-        const today = new Date();
-        const target_milliseconds=today.getTime() + 1000*60*60*24*day;
-        today.setTime(target_milliseconds);
-        let tMonth = today.getMonth();
-        let tDate = today.getDate();
-        tMonth = this.doHandleMonth(tMonth + 1);
-        tDate = this.doHandleMonth(tDate);
-        return tMonth + "-" + tDate;
-      },
+      }, 500)
+    },
+    // 获取近15日时间
+    doHandleMonth(month) {
+      let m = month;
+      if (month.toString().length === 1) {
+        m = "0" + month;
+      }
+      return m;
+    },
+    getDay(day) {
+      const today = new Date();
+      const target_milliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
+      today.setTime(target_milliseconds);
+      let tMonth = today.getMonth();
+      let tDate = today.getDate();
+      tMonth = this.doHandleMonth(tMonth + 1);
+      tDate = this.doHandleMonth(tDate);
+      return tMonth + "-" + tDate;
+    },
     submitEdit() {
       this.editVisible = false;
-       console.log(this.user);
-       this.$http.post('http://localhost:8085/hire/hire_profile/update/'+localStorage.getItem("r_id"),
-       { params:{
-           phone:this.user.user.phone,
-           ehr_vx:this.user.ehr_vx,
-           ehr_position:this.user.ehr_position,
-             }
-        }).then((response)=>{
-           console.log(response);
-       });
+      console.log(this.user);
+      this.$http.post('http://localhost:8085/hire/hire_profile/update/' + localStorage.getItem("r_id"),
+        {
+          params: {
+            phone: this.user.user.phone,
+            ehr_vx: this.user.ehr_vx,
+            ehr_position: this.user.ehr_position,
+          }
+        }).then((response) => {
+          console.log(response);
+        });
 
       // location.reload()
     },
   },
-  created(){
+  created() {
     const _this = this
-    this.$http.get('http://localhost:8085/hire/hire_profile/'+localStorage.getItem("r_id"))
+    this.$http.get('http://localhost:8085/hire/hire_profile/' + localStorage.getItem("r_id"))
       .then(function (response) {
-       _this.user=response.data;
-       console.log(_this.user)
-       _this.avatarUrl='http://localhost:8085/hrAvatar/'+_this.user.user.avatar;
-       console.log(_this.avatarUrl);
-       const v = _this
-      _this.$http.get('http://localhost:8085/index/company_detail/'+_this.user.company.e_id)
-      .then(function (response) {
-        console.log(response)
-       v.company=response.data
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+        _this.user = response.data;
+        console.log(_this.user)
+        _this.avatarUrl = 'http://localhost:8085/hrAvatar/' + _this.user.user.avatar;
+        console.log(_this.avatarUrl);
+        const v = _this
+        _this.$http.get('http://localhost:8085/index/company_detail/' + _this.user.company.e_id)
+          .then(function (response) {
+            console.log(response)
+            v.company = response.data
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
 
       })
       .catch(function (error) {

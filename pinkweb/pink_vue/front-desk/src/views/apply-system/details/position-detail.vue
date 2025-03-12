@@ -5,15 +5,16 @@
       <el-col :span="16">
         <div class="grid-content">
           <div class="p-basic">
-            <span class="p-name">{{position.r_name}}</span>
-            <span class="p-salary">{{position.r_salary}}</span>
+            <span class="p-name">{{ position.r_name }}</span>
+            <span class="p-salary">{{ position.r_salary }}</span>
           </div>
-          <div class="p-info">{{position.r_address}} · {{position.r_experience}} · {{position.r_education}}</div>
+          <div class="p-info">{{ position.r_address }} · {{ position.r_experience }} · {{ position.r_education }}</div>
         </div>
       </el-col>
       <el-col :span="8">
         <div class="grid-content">
-          <el-button type="warning" class="communicate-btn" @click="dialogFormVisible = true">立即沟通</el-button>
+          <el-button type="warning" class="communicate-btn"
+            @click="dialogFormVisible = true; fetchMessages()">立即沟通</el-button>
           <el-button type="success" class="communicate-btn" @click="submitApplication()">投递申请</el-button>
         </div>
       </el-col>
@@ -72,7 +73,7 @@
                   </el-col>
                   <el-col :span="15">
                     <div class="hr-content">
-                      <li class="hr-name">{{position.companyHr.company.e_excecutive}}</li>
+                      <li class="hr-name">{{ position.companyHr.company.e_excecutive }}</li>
                       <li class="hr-info">HR·刚刚在线</li>
                     </div>
                   </el-col>
@@ -96,7 +97,7 @@
                 <div class="p-intro">
                   <h3>技能需求</h3>
                   <p class="p-intro-main">
-                    {{position.r_experience}}
+                    {{ position.r_experience }}
                   </p>
                 </div>
               </div>
@@ -104,7 +105,7 @@
                 <div class="p-intro">
                   <h3>福利待遇</h3>
                   <p class="p-intro-main">
-                    {{position.r_tag}}
+                    {{ position.r_tag }}
                   </p>
                 </div>
               </div>
@@ -112,9 +113,9 @@
                 <div class="p-intro">
                   <h3>公司简介</h3>
                   <p class="p-intro-main">
-                    {{position.companyHr.company.e_introduction}}
+                    {{ position.companyHr.company.e_introduction }}
                   </p>
-<!--                  <el-button type="text" class="p-more" @click="jumpCompany">了解更多</el-button>-->
+                  <!--                  <el-button type="text" class="p-more" @click="jumpCompany">了解更多</el-button>-->
                 </div>
               </div>
               <div class="business-content">
@@ -122,19 +123,19 @@
                   <h3>工商信息</h3>
                   <el-collapse accordion class="collapse">
                     <el-collapse-item title="法人 Corporate" name="1">
-                      <div>{{position.companyHr.company.e_executive}}</div>
+                      <div>{{ position.companyHr.company.e_executive }}</div>
                     </el-collapse-item>
                     <el-collapse-item title="企业类型 Type" name="2">
-                      <div>{{position.companyHr.company.e_type}}</div>
+                      <div>{{ position.companyHr.company.e_type }}</div>
                     </el-collapse-item>
                     <el-collapse-item title="经营状态 State" name="3">
-                      <div>{{position.companyHr.company.e_operationstatus}}</div>
+                      <div>{{ position.companyHr.company.e_operationstatus }}</div>
                     </el-collapse-item>
                     <el-collapse-item title="注册地址 Address" name="4">
-                      <div>{{position.companyHr.company.e_registeredaddress}}</div>
+                      <div>{{ position.companyHr.company.e_registeredaddress }}</div>
                     </el-collapse-item>
                     <el-collapse-item title="经营范围 Range" name="5">
-                      <div>{{position.companyHr.company.e_businessscope}}</div>
+                      <div>{{ position.companyHr.company.e_businessscope }}</div>
                     </el-collapse-item>
                   </el-collapse>
                 </div>
@@ -157,10 +158,11 @@
               <ul class="r-company">
                 <li>
                   <span>
-                    <img :src="'http://localhost:8085/companyAvatar/'+position.companyHr.company.e_logo" alt="" class="r-company-logo">
+                    <img :src="'http://localhost:8085/companyAvatar/' + position.companyHr.company.e_logo" alt=""
+                      class="r-company-logo">
                   </span>
                   <span class="r-company-name">
-                    {{position.companyHr.company.e_name}}
+                    {{ position.companyHr.company.e_name }}
                   </span>
                 </li>
                 <li class="r-company-info">
@@ -168,7 +170,7 @@
                     <i class="el-icon-s-data"></i>
                   </span>
                   <span class="r-company-intro">
-                    {{position.companyHr.company.e_operationstatus}}
+                    {{ position.companyHr.company.e_operationstatus }}
                   </span>
                 </li>
                 <li class="r-company-info">
@@ -176,7 +178,7 @@
                     <i class="el-icon-s-custom"></i>
                   </span>
                   <span class="r-company-intro">
-                    {{position.companyHr.company.e_size}}人
+                    {{ position.companyHr.company.e_size }}人
                   </span>
                 </li>
                 <li class="r-company-info">
@@ -184,7 +186,7 @@
                     <i class="el-icon-menu"></i>
                   </span>
                   <span class="r-company-intro">
-                    {{position.companyHr.company.e_businessscope}}
+                    {{ position.companyHr.company.e_businessscope }}
                   </span>
                 </li>
               </ul>
@@ -225,7 +227,7 @@ import PostApp from "../../../components/apply-system/post/PostApp";
 import ResumeItem from "../../../components/apply-system/resume/ResumeItem";
 export default {
   name: "position-detail",
-  components: {PostApp, CommunicateLi,ResumeItem},
+  components: { PostApp, CommunicateLi, ResumeItem },
   data() {
     return {
       resumes: [],
@@ -237,16 +239,16 @@ export default {
       visible: false,
       formLabelWidth: '120px',
       chats: [
-        {
-          index: 1,
-          type: '已发送',
-          content: '您好，我对java软件开发实习生很感兴趣，希望和您聊聊，谢谢！'
-        },
-        {
-          index: 2,
-          type: '已接受',
-          content: '不可能，你太菜了'
-        }
+        // {
+        //   index: 1,
+        //   type: '已发送',
+        //   content: '您好，我对java软件开发实习生很感兴趣，希望和您聊聊，谢谢！'
+        // },
+        // {
+        //   index: 2,
+        //   type: '已接受',
+        //   content: '不可能，你太菜了'
+        // }
       ],
       position: {},
       company: {},
@@ -254,36 +256,124 @@ export default {
     }
   },
   created() {
+    // 获取路由参数中的index值，并将其保存到本地存储
     this.r_id = this.$route.query.index;
-    localStorage.setItem('r_id',this.r_id)
+    localStorage.setItem('r_id', this.r_id)
+
+    // 由于在回调函数中需要使用this，所以在外部定义一个_this变量以保存当前上下文
     const _this = this
-    this.$http.get('http://localhost:8085/index/position_detail/'+this.r_id)
+
+    // 发起HTTP GET请求，获取职位详情数据
+    this.$http.get('http://localhost:8085/index/position_detail/' + this.r_id)
       .then(function (response) {
-       _this.position = response.data
-       console.log(_this.position);
+        // 成功时，将响应数据赋值给_this.position，并打印到控制台
+        _this.position = response.data
+        console.log(_this.position);
       })
       .catch(function (error) {
+        // 失败时，打印错误信息到控制台
         console.log(error);
       });
+
+    // 发起HTTP GET请求，获取热门招聘数据
     this.$http.get('http://localhost:8085/index/apply_home/hotRecruitment')
       .then(function (response) {
-      for(var len = 0;len<response.data.length;len++){
-        if(len>4){
-          break;
-        }
-        _this.posts.push(response.data[len])
+        // 遍历响应数据，只取前5条记录添加到_this.posts数组中
+        for (var len = 0; len < response.data.length; len++) {
+          if (len > 4) {
+            break;
+          }
+          _this.posts.push(response.data[len])
         }
       })
       .catch(function (error) {
+        // 失败时，打印错误信息到控制台
         console.log(error);
       });
+    /*     // 从后端获取数据并渲染到页面上
+        this.$http.get('http://localhost:8085/get', {
+          params: {
+            u_id: localStorage.getItem('c_id'),
+            p_id: localStorage.getItem('r_id')
+          }
+        })
+          .then(function (response) {
+            // 成功时，将响应数据赋值给_this.chats，并打印到控制台
+            _this.chats = response.data;
+            console.log(_this.chats);
+          })
+          .catch(function (error) {
+            // 失败时，打印错误信息到控制台
+            console.log(error);
+          }); */
   },
-
-
   methods: {
-
+    // 获取消息数据的方法
+    fetchMessages() {
+      const _this = this;
+      this.$http.get('http://localhost:8085/message/get', {
+        params: {
+          u_id: localStorage.getItem('c_id'),
+          p_id: localStorage.getItem('r_id')
+        }
+      })
+        .then(function (response) {
+          // 成功时，将响应数据赋值给_this.chats，并打印到控制台
+          // _this.chats = response.data;
+          for (var len = 0; len < response.data.length; len++) {
+            const newChat = {
+              index: _this.chats.length + 1,
+              type: '已发送',
+              content: response.data[len]
+            };
+            // 将新消息添加到 chats 数组
+            _this.chats.push(newChat);
+          }
+          console.log("回显信息成功" + _this.chats);
+        })
+        .catch(function (error) {
+          // 失败时，打印错误信息到控制台
+          console.log("回显信息失败：" + error);
+        });
+    },
     onSubmit() {
-      alert(this.communication.text)
+      if (this.communication.text.trim() === '') {
+        alert('请输入消息');
+        return;
+      }
+      // 创建新的消息对象
+      const newChat = {
+        index: this.chats.length + 1,
+        type: '已发送',
+        content: this.communication.text
+      };
+
+      // 将新消息添加到 chats 数组
+      this.chats.push(newChat);
+
+      // 清空输入框
+      this.communication.text = '';
+
+      // 发送消息到后端
+      this.sendMessageToBackend(newChat);
+    },
+    sendMessageToBackend(chat) {
+      const _this = this;
+      this.$http.post('http://localhost:8085/message/send', {
+        data: {
+          u_id: localStorage.getItem('c_id'),
+          p_id: localStorage.getItem('r_id'),
+          message: chat.content
+        }
+      })
+        .then(function (response) {
+          console.log(response);
+          // 如果需要，可以在这里处理后端返回的数据
+        })
+        .catch(function (error) {
+          console.log(error);
+          alert('发送消息失败，请重试');
+        });
     },
     jumpCompany() {
       // 携带索引跳转公司
@@ -295,38 +385,37 @@ export default {
       })
     },
     submitApplication() {
-
       const v = this
-      this.$http.post('http://localhost:8085/index/apply_resume/judge',{
-        data:{
-          u_id : localStorage.getItem('c_id'),
-          p_id : localStorage.getItem('r_id'),
+      this.$http.post('http://localhost:8085/index/apply_resume/judge', {
+        data: {
+          u_id: localStorage.getItem('c_id'),
+          p_id: localStorage.getItem('r_id'),
         }
       })
-      .then(function (response) {
-      console.log(response)
-      if(response.data+''==="已经投递该岗位"){
-        alert("已经投递了该岗位，请等待消息")
-      }else{
-        const y = v
-        v.resumeVisible=true
-        v.resumes = []
-        v.$http.get('http://localhost:8085/index/apply_edit/getallresume/'+localStorage.getItem('c_id'))
         .then(function (response) {
-        console.log(response)
-        for(var len = 0;len<response.data.length;len++){
-            response.data[len].flag = 1
-            y.resumes.push(response.data[len])
+          console.log(response)
+          if (response.data + '' === "已经投递该岗位") {
+            alert("已经投递了该岗位，请等待消息")
+          } else {
+            const y = v
+            v.resumeVisible = true
+            v.resumes = []
+            v.$http.get('http://localhost:8085/index/apply_edit/getallresume/' + localStorage.getItem('c_id'))
+              .then(function (response) {
+                console.log(response)
+                for (var len = 0; len < response.data.length; len++) {
+                  response.data[len].flag = 1
+                  y.resumes.push(response.data[len])
+                }
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
           }
         })
         .catch(function (error) {
           console.log(error);
         });
-      }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
 
 
     }

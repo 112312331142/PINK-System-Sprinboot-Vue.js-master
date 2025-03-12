@@ -19,17 +19,17 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public String candidateLogin(String phone, String password) throws JsonProcessingException {
         User user = loginMapper.userLogin(phone);
-        if(user!=null){
-            if(password.equals(user.getPassword())){
-                String token= TokenUtil.sign(user);
-                HashMap<String,Object> hs=new HashMap<>();
-                hs.put("token",token);
-                ObjectMapper objectMapper=new ObjectMapper();
+        if (user != null) {
+            if (password.equals(user.getPassword())) {
+                String token = TokenUtil.sign(user);
+                HashMap<String, Object> hs = new HashMap<>();
+                hs.put("token", token);
+                ObjectMapper objectMapper = new ObjectMapper();
                 return objectMapper.writeValueAsString(hs);
-            }else{
+            } else {
                 return "账号或密码错误";
             }
-        }else{
+        } else {
             return "用户不存在";
         }
     }

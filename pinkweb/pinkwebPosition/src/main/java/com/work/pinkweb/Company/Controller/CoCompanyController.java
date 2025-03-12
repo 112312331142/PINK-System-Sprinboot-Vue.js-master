@@ -3,11 +3,12 @@ package com.work.pinkweb.Company.Controller;
 import com.work.pinkweb.Company.Service.CoCompanyService;
 import com.work.pinkweb.Entity.Company;
 import com.work.pinkweb.utils.FileUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
+//import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @RestController
@@ -16,7 +17,9 @@ public class CoCompanyController {
     private CoCompanyService coCompanyService;
     //更新公司logo
     @PostMapping("/company/profile/avatar")
-    public String uploadComanyLogo(HttpServletRequest request, @RequestParam("file") MultipartFile file , @RequestParam("e_id")Integer e_id ){
+    public String uploadCompanyLogo(HttpServletRequest request,
+                                    @RequestParam("file") MultipartFile file ,
+                                    @RequestParam("e_id")Integer e_id ){
         System.out.println(e_id);
 
         //1.保存到硬盘上

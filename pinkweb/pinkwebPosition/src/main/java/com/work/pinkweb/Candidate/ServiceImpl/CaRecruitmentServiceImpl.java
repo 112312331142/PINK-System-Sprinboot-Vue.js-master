@@ -30,41 +30,41 @@ public class CaRecruitmentServiceImpl implements CaRecruitmentService {
     @Override
     public PageInfo<Recruitment> getRecruitmentByCondition(Integer pageIndex, Integer pageSize, String key, String flag) {
         List<Recruitment> rlist = null;
-        PageHelper.startPage(pageIndex,pageSize);//一个设置
+        PageHelper.startPage(pageIndex, pageSize);//一个设置
 
-        double time_tmp=0;
-        if(flag.equals("undefined")||flag.equals("不限")||flag.equals("全部城市")){
-            rlist= caRecruitmentMapper.getAllRecruitment();
-        }else {
-                if(key.matches(".*time.*")){
-                    String[] timeArr = key.split("\\_");
-                    time_tmp = Float.valueOf(timeArr[1]);
-                    key = "time";
-                }
-            switch (key){
+        double time_tmp = 0;
+        if (flag.equals("undefined") || flag.equals("不限") || flag.equals("全部城市")) {
+            rlist = caRecruitmentMapper.getAllRecruitment();
+        } else {
+            if (key.matches(".*time.*")) {
+                String[] timeArr = key.split("\\_");
+                time_tmp = Float.valueOf(timeArr[1]);
+                key = "time";
+            }
+            switch (key) {
                 case "salary":
-                    rlist= caRecruitmentMapper.getBySalary(flag);
+                    rlist = caRecruitmentMapper.getBySalary(flag);
                     break;
                 case "time":
-                    rlist= caRecruitmentMapper.getByTime((float) time_tmp);
+                    rlist = caRecruitmentMapper.getByTime((float) time_tmp);
                     break;
                 case "exp":
-                    rlist= caRecruitmentMapper.getByExperience(flag);
+                    rlist = caRecruitmentMapper.getByExperience(flag);
                     break;
                 case "degree":
-                    rlist= caRecruitmentMapper.getByDegree(flag);
+                    rlist = caRecruitmentMapper.getByDegree(flag);
                     break;
                 case "城市":
-                    rlist= caRecruitmentMapper.getByCity(flag);
+                    rlist = caRecruitmentMapper.getByCity(flag);
                     break;
                 case "搜索":
-                    rlist= caRecruitmentMapper.getByName(flag);
+                    rlist = caRecruitmentMapper.getByName(flag);
                     break;
                 default:
                     break;
             }
         }
-        PageInfo<Recruitment> info=new PageInfo<>(rlist);
+        PageInfo<Recruitment> info = new PageInfo<>(rlist);
         return info;
     }
 

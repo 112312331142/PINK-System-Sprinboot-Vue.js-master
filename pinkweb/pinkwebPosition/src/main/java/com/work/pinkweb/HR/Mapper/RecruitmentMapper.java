@@ -8,8 +8,12 @@ import java.util.List;
 @Mapper
 public interface RecruitmentMapper {
     List<Recruitment> getRecruitmentByEhrid(Integer ehrid);
+
     Integer deleteOneRecruitment(Integer r_id);
+
     Integer insertOneRecruitment(Recruitment re);
+
     Recruitment getRecruitmentAppByRid(Integer r_id);
+
     Integer updateRecruitment(Recruitment recruitment);
 }

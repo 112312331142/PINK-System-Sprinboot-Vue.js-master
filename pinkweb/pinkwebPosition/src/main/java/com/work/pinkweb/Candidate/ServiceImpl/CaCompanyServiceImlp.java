@@ -27,36 +27,40 @@ public class CaCompanyServiceImlp implements CaCompanyService {
     }
 
     @Override
-    public Company getCompanyHr(Integer e_id) {return caCompanyMapper.getCompanyHr(e_id);}
+    public Company getCompanyHr(Integer e_id) {
+        return caCompanyMapper.getCompanyHr(e_id);
+    }
 
     @Override
-    public List<CompanyHr> getHrRecruitment(Integer e_id) {return caCompanyMapper.getHrRecruitment(e_id);}
+    public List<CompanyHr> getHrRecruitment(Integer e_id) {
+        return caCompanyMapper.getHrRecruitment(e_id);
+    }
 
     @Override
-    public PageInfo<Company> getCompanyByCondition(Integer pageIndex, Integer pageSize,String key,String flag) {
+    public PageInfo<Company> getCompanyByCondition(Integer pageIndex, Integer pageSize, String key, String flag) {
         List<Company> clist = null;
-        PageHelper.startPage(pageIndex,pageSize);//一个设置
-        if(flag.equals("undefined")||flag.equals("不限")){
-            clist= caCompanyMapper.getAllCompany();
-        }else{
-            switch (key){
+        PageHelper.startPage(pageIndex, pageSize);//一个设置
+        if (flag.equals("undefined") || flag.equals("不限")) {
+            clist = caCompanyMapper.getAllCompany();
+        } else {
+            switch (key) {
                 case "公司地点":
-                    clist= caCompanyMapper.getCompanyByCity(flag);
+                    clist = caCompanyMapper.getCompanyByCity(flag);
                     break;
                 case "行业类型":
-                    clist= caCompanyMapper.getCompanyByType(flag);
+                    clist = caCompanyMapper.getCompanyByType(flag);
                     break;
                 case "公司规模":
-                    clist= caCompanyMapper.getCompanyBySize(flag);
+                    clist = caCompanyMapper.getCompanyBySize(flag);
                     break;
                 case "搜索":
-                    clist= caCompanyMapper.searchCompany(flag);
+                    clist = caCompanyMapper.searchCompany(flag);
                     break;
                 default:
                     break;
             }
         }
-        PageInfo<Company> info=new PageInfo<>(clist);
+        PageInfo<Company> info = new PageInfo<>(clist);
         return info;
     }
 

@@ -22,9 +22,10 @@ public class LoginController {
         return state;
     }
 
+    // 获取用户信息
     @RequestMapping(value = "/premise/candidate_login/{phone}",method = RequestMethod.GET)
     @ResponseBody
-    public User getUserInfo(@PathVariable("phone") String phone) throws JsonProcessingException {
+    public User getUserInfo(@PathVariable("phone") String phone) {
         return loginService.getUserInfo(phone);
     }
 }

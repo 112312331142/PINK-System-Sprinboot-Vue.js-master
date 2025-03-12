@@ -1,10 +1,11 @@
 package com.work.pinkweb.Candidate.Service;
 
 import com.work.pinkweb.Entity.Resume;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.FileNotFoundException;
+//import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;

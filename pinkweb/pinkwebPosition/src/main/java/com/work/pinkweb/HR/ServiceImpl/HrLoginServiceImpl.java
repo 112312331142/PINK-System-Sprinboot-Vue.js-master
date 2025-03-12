@@ -21,17 +21,17 @@ public class HrLoginServiceImpl implements HrLoginService {
     @Override
     public String hrLogin(String phone, String password) throws JsonProcessingException {
         User user = hrLoginMapper.hrLogin(phone);
-        if(user!=null){
-            if(password.equals(user.getPassword())){
-                String token= TokenUtil.sign(user);
-                HashMap<String,Object> hs=new HashMap<>();
-                hs.put("token",token);
-                ObjectMapper objectMapper=new ObjectMapper();
+        if (user != null) {
+            if (password.equals(user.getPassword())) {
+                String token = TokenUtil.sign(user);
+                HashMap<String, Object> hs = new HashMap<>();
+                hs.put("token", token);
+                ObjectMapper objectMapper = new ObjectMapper();
                 return objectMapper.writeValueAsString(hs);
-            }else{
+            } else {
                 return "账号或密码错误";
             }
-        }else{
+        } else {
             return "用户不存在";
         }
     }

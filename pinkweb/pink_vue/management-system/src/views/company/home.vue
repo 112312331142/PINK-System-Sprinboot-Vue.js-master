@@ -9,10 +9,10 @@
           <div class="tl-panel">
             <div class="greet">
               <span class="greet-time">Hello，</span>
-              <span class="greet-target">{{company.user.name}}!</span>
+              <span class="greet-target">{{ company.user.name }}!</span>
             </div>
             <div class="diagram">
-              <div id="myChart" :style="{width: '100%', height: '380px'}"></div>
+              <div id="myChart" :style="{ width: '100%', height: '380px' }"></div>
             </div>
           </div>
         </el-col>
@@ -53,15 +53,15 @@
                       <ul>
                         <li class="tip-li">
                           <i class="el-icon-info"></i>
-                          {{company.company.e_id}}
+                          {{ company.company.e_id }}
                         </li>
                         <li class="tip-li">
                           <i class="el-icon-s-goods"></i>
-                          {{company.company.e_name}}
+                          {{ company.company.e_name }}
                         </li>
                         <li class="tip-li">
                           <i class="el-icon-user-solid"></i>
-                          {{company.company.e_legalrepresentative}}
+                          {{ company.company.e_legalrepresentative }}
                         </li>
                       </ul>
                     </div>
@@ -71,15 +71,15 @@
                       <ul>
                         <li class="tip-li">
                           <i class="el-icon-s-cooperation"></i>
-                          {{company.company.e_businessscope}}
+                          {{ company.company.e_businessscope }}
                         </li>
                         <li class="tip-li">
                           <i class="el-icon-s-shop"></i>
-                          {{company.company.e_type}}
+                          {{ company.company.e_type }}
                         </li>
                         <li class="tip-li">
                           <i class="el-icon-s-opportunity"></i>
-                          {{company.company.e_address}}
+                          {{ company.company.e_address }}
                         </li>
                       </ul>
                     </div>
@@ -101,7 +101,7 @@
 import MainTitle from "../../components/company/body/MainTitle";
 export default {
   name: "home",
-  components: {MainTitle},
+  components: { MainTitle },
   data() {
     return {
       // 近10天日期
@@ -110,45 +110,45 @@ export default {
       nums: [20, 12, 24, 50, 12, 3, 1, 10, 14, 30],
       greet: '',
       company: {
-        hrNum:'',
-        positionNum:''
+        hrNum: '',
+        positionNum: ''
       },
-      e_id:''
+      e_id: ''
     }
   },
-  created(){
-      const v = this
-    this.$http.get('http://localhost:8085/premise/candidate_login/'+localStorage.getItem('phone'))
+  created() {
+    const v = this
+    this.$http.get('http://localhost:8085/premise/candidate_login/' + localStorage.getItem('phone'))
       .then(function (response) {
         console.log(response)
-      localStorage.setItem("ea_id",response.data.id)
+        localStorage.setItem("ea_id", response.data.id)
       })
       .catch(function (error) {
         console.log(error);
       });
 
     const _this = this
-    var ea_id=11
-    this.$http.get('http://localhost:8085/company/profile/'+localStorage.getItem("ea_id"))
+    var ea_id = 11
+    this.$http.get('http://localhost:8085/company/profile/' + localStorage.getItem("ea_id"))
       .then(function (response) {
         console.log(response)
         const v = _this
-           _this.company=response.data
-           _this.$http.get('http://localhost:8085/hire/hire_profile/company/'+response.data.e_id)
-           .then(function (response) {
-             console.log(response)
-                v.company.hrNum=response.data.hrNum;
-                v.company.positionNum=response.data.positionNum;
-                setTimeout(function () {
-                  let dom_1 = document.getElementById("hrNum")
-                  dom_1.textContent = v.company.hrNum
-                  let dom_2 = document.getElementById("positionNum")
-                  dom_2.textContent = v.company.positionNum
-                }, 0)
-      })
-      .catch(function (error) {
-        console.log(error)
-      });
+        _this.company = response.data
+        _this.$http.get('http://localhost:8085/hire/hire_profile/company/' + response.data.e_id)
+          .then(function (response) {
+            console.log(response)
+            v.company.hrNum = response.data.hrNum;
+            v.company.positionNum = response.data.positionNum;
+            setTimeout(function () {
+              let dom_1 = document.getElementById("hrNum")
+              dom_1.textContent = v.company.hrNum
+              let dom_2 = document.getElementById("positionNum")
+              dom_2.textContent = v.company.positionNum
+            }, 0)
+          })
+          .catch(function (error) {
+            console.log(error)
+          });
 
 
       })
@@ -169,16 +169,16 @@ export default {
       })
     },
     // 获取近15日时间
-    doHandleMonth(month){
+    doHandleMonth(month) {
       let m = month;
-      if(month.toString().length === 1){
+      if (month.toString().length === 1) {
         m = "0" + month;
       }
       return m;
     },
-    getDay(day){
+    getDay(day) {
       const today = new Date();
-      const target_milliseconds=today.getTime() + 1000*60*60*24*day;
+      const target_milliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
       today.setTime(target_milliseconds);
       let tMonth = today.getMonth();
       let tDate = today.getDate();
@@ -188,8 +188,8 @@ export default {
     },
     // 判断时间
     greetJudge() {
-      const now = new Date(),hour = now.getHours()
-      if(hour < 6) {
+      const now = new Date(), hour = now.getHours()
+      if (hour < 6) {
         this.greet = '凌晨好'
       } else if (hour < 9) {
         this.greet = '早上好'
@@ -208,7 +208,7 @@ export default {
       }
     },
     // echarts
-    drawLine(){
+    drawLine() {
       const that = this
       setTimeout(function () {
         let myChart = that.$echarts.init(document.getElementById('myChart'), "style")
@@ -220,7 +220,7 @@ export default {
               lineStyle: {
                 type: 'solid',
                 color: '#d8d8d8',
-                width:'1'
+                width: '1'
               }
             },
             axisLabel: {
@@ -267,7 +267,7 @@ export default {
     }
   },
   mounted() {
-    for (let i = -9; i <= 0; i ++) {
+    for (let i = -9; i <= 0; i++) {
       this.dates.push(this.getDay(i))
     }
     this.drawLine();

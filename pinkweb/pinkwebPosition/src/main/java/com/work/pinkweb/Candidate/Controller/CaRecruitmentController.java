@@ -16,21 +16,28 @@ public class CaRecruitmentController {
     @Autowired
     private CaRecruitmentService caRecruitmentService;
 
+    // 获取热门岗位
     @RequestMapping("/index/apply_home/hotRecruitment")
-    public List<Recruitment> getHotRecruitment() {return caRecruitmentService.getHotRecruitment();}
+    public List<Recruitment> getHotRecruitment() {
+        return caRecruitmentService.getHotRecruitment();
+    }
 
+    // 获取岗位详情
     @RequestMapping("/index/position_detail/{r_id}")
-    public Recruitment getRecruitmentDetailsById(@PathVariable("r_id") Integer id){return  caRecruitmentService.getRecruitmentDetailsById(id);}
+    public Recruitment getRecruitmentDetailsById(@PathVariable("r_id") Integer id) {
+        return caRecruitmentService.getRecruitmentDetailsById(id);
+    }
 
+    // 检索岗位
     @RequestMapping("/index/apply_position/query")
     @ResponseBody
     public PageInfo<Recruitment> getRecruitmentByCondition(@RequestBody Map<String, Map> para,
-                                         @RequestParam("key")String key,
-                                         @RequestParam("flag")String flag) {
+                                                           @RequestParam("key") String key,
+                                                           @RequestParam("flag") String flag) {
 
-        Integer pageIndex=Integer.valueOf(para.get("params").get("pageNow").toString());
-        Integer pageSize=Integer.valueOf(para.get("params").get("pageSize").toString());
-        return caRecruitmentService.getRecruitmentByCondition(pageIndex,pageSize,key,flag);
+        Integer pageIndex = Integer.valueOf(para.get("params").get("pageNow").toString());
+        Integer pageSize = Integer.valueOf(para.get("params").get("pageSize").toString());
+        return caRecruitmentService.getRecruitmentByCondition(pageIndex, pageSize, key, flag);
     }
 
     //携带简历申请岗位
@@ -40,6 +47,7 @@ public class CaRecruitmentController {
         Integer u_id = Integer.valueOf(para.get("data").get("u_id").toString());
         Integer p_id = Integer.valueOf(para.get("data").get("p_id").toString());
         Integer r_id = Integer.valueOf(para.get("data").get("r_id").toString());
+        System.out.println("u_id = " + u_id);
         return caRecruitmentService.applyResume(u_id, p_id, r_id, new Date());
     }
 

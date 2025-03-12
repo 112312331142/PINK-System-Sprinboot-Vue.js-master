@@ -7,7 +7,9 @@ import java.util.List;
 
 @Mapper
 public interface CompanyHrMapper {
-   List<CompanyHr> getCompanyHrAllInfo(Integer ehrid);
-   Integer updateHrInfo(Integer ehr_id,String ehr_vx,String ehr_position);
-   Integer updateHrPhone(Integer ehr_id,String phone);
+    List<CompanyHr> getCompanyHrAllInfo(Integer ehrid);
+
+    Integer updateHrInfo(Integer ehr_id, String ehr_vx, String ehr_position);
+
+    Integer updateHrPhone(Integer ehr_id, String phone);
 }

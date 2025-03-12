@@ -19,7 +19,7 @@
             <el-col :span="18">
               <div class="province-content">
                 <span>热门城市：</span>
-                <span v-for="city in cities" class="city">
+                <span v-for="(city, index) in cities" :key="index" class="city">
                   <el-button type="text" class="city-btn" @click="citySearch(city)">{{city}}</el-button>
                 </span>
               </div>
@@ -286,7 +286,8 @@ export default {
   },
   created() {
           var that = this
-          this.$http.post('http://localhost:8085/index/apply_position/query?key='+this.$route.query.key+"&flag="+this.$route.query.flag,{
+          this.$http.post('http://localhost:8085/index/apply_position/query?key='+this.$route.query.key+
+          "&flag="+this.$route.query.flag,{
             params:{
               pageNow: 1,
               pageSize: 6
@@ -325,7 +326,8 @@ export default {
         },
         findAll(page, size){
           var that = this
-          this.$http.post('http://localhost:8085/index/apply_position/query?key='+this.$route.query.key+"&flag="+this.$route.query.flag,{
+          this.$http.post('http://localhost:8085/index/apply_position/query?key='+this.$route.query.key+
+          "&flag="+this.$route.query.flag,{
             params:{
               pageNow: this.pageNow,
               pageSize: this.size

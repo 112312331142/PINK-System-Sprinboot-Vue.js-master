@@ -9,35 +9,36 @@
           <div class="left-content">
             <div class="lt-content">
               <div class="company-logo-col">
-                <span class="occupy" @mouseover="mouseOver" @mouseout="mouseOut" @click="editAvatarDialog = true">修改</span>
+                <span class="occupy" @mouseover="mouseOver" @mouseout="mouseOut"
+                  @click="editAvatarDialog = true">修改</span>
                 <img :src="avatarUrl" alt="" class="logo-img">
               </div>
-              <li class="company-name">{{form.company.e_name}}</li>
+              <li class="company-name">{{ form.company.e_name }}</li>
             </div>
             <div class="lb-content">
               <ul>
                 <li class="info-tips">
                   <el-row>
                     <el-col :span="6" class="tip-title">公司法人:</el-col>
-                    <el-col :span="18" class="tip-content">{{form.company.e_legalrepresentative}}</el-col>
+                    <el-col :span="18" class="tip-content">{{ form.company.e_legalrepresentative }}</el-col>
                   </el-row>
                 </li>
                 <li class="info-tips">
                   <el-row>
                     <el-col :span="6" class="tip-title">企业类型:</el-col>
-                    <el-col :span="18" class="tip-content">{{form.company.e_type}}</el-col>
+                    <el-col :span="18" class="tip-content">{{ form.company.e_type }}</el-col>
                   </el-row>
                 </li>
                 <li class="info-tips">
                   <el-row>
                     <el-col :span="6" class="tip-title">经营范围:</el-col>
-                    <el-col :span="18" class="tip-content">{{form.company.e_businessscope}}</el-col>
+                    <el-col :span="18" class="tip-content">{{ form.company.e_businessscope }}</el-col>
                   </el-row>
                 </li>
                 <li class="info-tips">
                   <el-row>
                     <el-col :span="6" class="tip-title">总部地址:</el-col>
-                    <el-col :span="18" class="tip-content">{{form.company.e_address}}</el-col>
+                    <el-col :span="18" class="tip-content">{{ form.company.e_address }}</el-col>
                   </el-row>
                 </li>
               </ul>
@@ -66,7 +67,8 @@
                       </el-input>
                     </el-form-item>
                     <el-form-item label="注册时间">
-                      <el-date-picker v-model="form.company.e_establishtime" type="date" placeholder="选择日期" style="width: 100%"></el-date-picker>
+                      <el-date-picker v-model="form.company.e_establishtime" type="date" placeholder="选择日期"
+                        style="width: 100%"></el-date-picker>
                     </el-form-item>
                     <el-form-item label="企业类型">
                       <el-select v-model="form.company.e_type" placeholder="请选择企业类型" style="width: 100%">
@@ -99,17 +101,11 @@
                       </el-input>
                     </el-form-item>
                     <el-form-item label="公司许可">
-                      <el-upload
-                        ref="upload"
-                        class="upload-demo"
-                        action="http://localhost:8085/company/profile/licenseImg"
-                        :data="uploadData"
-                        :limit="1"
-                        :on-success="handleSuccess"
-                        :on-preview="handlePreview"
-                        :on-remove="handleRemove"
+                      <el-upload ref="upload" class="upload-demo"
+                        action="http://localhost:8085/company/profile/licenseImg" :data="uploadData" :limit="1"
+                        :on-success="handleSuccess" :on-preview="handlePreview" :on-remove="handleRemove"
                         :before-remove="beforeRemove">
-                        <el-button size="small" type="primary" class="upload-btn" >点击上传</el-button>
+                        <el-button size="small" type="primary" class="upload-btn">点击上传</el-button>
                       </el-upload>
                     </el-form-item>
                     <el-form-item label="经营范围">
@@ -127,13 +123,16 @@
                       </el-select>
                     </el-form-item>
                     <el-form-item label="注册地址">
-                      <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2}" v-model="form.company.e_registeredaddress"></el-input>
+                      <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }"
+                        v-model="form.company.e_registeredaddress"></el-input>
                     </el-form-item>
                     <el-form-item label="总部地址">
-                      <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2}" v-model="form.company.e_address"></el-input>
+                      <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }"
+                        v-model="form.company.e_address"></el-input>
                     </el-form-item>
                     <el-form-item label="公司简介">
-                      <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 3}" v-model="form.company.e_introduction"></el-input>
+                      <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 3 }"
+                        v-model="form.company.e_introduction"></el-input>
                     </el-form-item>
                     <el-button type="success" @click="updateCompany" class="edit-btn">修改</el-button>
                   </div>
@@ -145,14 +144,8 @@
       </el-row>
       <el-dialog title="修改公司图标" :visible.sync="editAvatarDialog" width="30%">
         <div class="upload-div">
-          <el-upload
-            ref="upload"
-            action="http://localhost:8085/company/profile/avatar"
-            :data="uploadData"
-            :limit="1"
-            list-type="picture-card"
-            :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemove"
+          <el-upload ref="upload" action="http://localhost:8085/company/profile/avatar" :data="uploadData" :limit="1"
+            list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove"
             :on-success="handleSuccess">
             <i class="el-icon-plus"></i>
           </el-upload>
@@ -167,49 +160,49 @@
 </template>
 
 <script>
-  import MainTitle from "../../components/company/body/MainTitle";
-  export default {
-    name: "profile",
-    components: {MainTitle},
-    data() {
-      return {
-        editAvatarDialog: false,
-        form: {
+import MainTitle from "../../components/company/body/MainTitle";
+export default {
+  name: "profile",
+  components: { MainTitle },
+  data() {
+    return {
+      editAvatarDialog: false,
+      form: {
 
-        },
-        avatarUrl:'',
-        uploadData:{
-           e_id:''
       },
-        e_id: '',
-        e_name: '',
-        e_introduction: '',
-        e_legalrepresentative:'',
-        e_registeredcapital: '',
-        e_establishtime: '',
-        e_type:'',
-        e_operationstatus:'',
-        e_registeredaddress:'',
-        e_unifiedcreditcode: '',
-        e_size:'',
-        e_businessscope: '',
-        e_licenseimg:'',
-        e_address:'',
-        created_time:'',
-        e_logo:'',
+      avatarUrl: '',
+      uploadData: {
+        e_id: ''
+      },
+      e_id: '',
+      e_name: '',
+      e_introduction: '',
+      e_legalrepresentative: '',
+      e_registeredcapital: '',
+      e_establishtime: '',
+      e_type: '',
+      e_operationstatus: '',
+      e_registeredaddress: '',
+      e_unifiedcreditcode: '',
+      e_size: '',
+      e_businessscope: '',
+      e_licenseimg: '',
+      e_address: '',
+      created_time: '',
+      e_logo: '',
 
-      }
-    },
-    created(){
-      const _this=this
-      this.$http.get('http://localhost:8085/company/profile/'+localStorage.getItem("ea_id"))
+    }
+  },
+  created() {
+    const _this = this
+    this.$http.get('http://localhost:8085/company/profile/' + localStorage.getItem("ea_id"))
       .then(function (response) {
-           _this.form=response.data
-           _this.form.company.e_establishtime=_this.form.company.e_establishtime.substring(0,10)
-           console.log(_this.form)
-           _this.uploadData.e_id=_this.form.company.e_id
-           localStorage.setItem("e_id",_this.uploadData.e_id)
-           _this.avatarUrl='http://localhost:8085/companyAvatar/'+response.data.company.e_logo
+        _this.form = response.data
+        _this.form.company.e_establishtime = _this.form.company.e_establishtime.substring(0, 10)
+        console.log(_this.form)
+        _this.uploadData.e_id = _this.form.company.e_id
+        localStorage.setItem("e_id", _this.uploadData.e_id)
+        _this.avatarUrl = 'http://localhost:8085/companyAvatar/' + response.data.company.e_logo
 
 
       })
@@ -218,78 +211,78 @@
       });
 
 
-    },
-    methods: {
+  },
+  methods: {
 
-      updateCompany(){
-        this.$http.post('http://localhost:8085/company/profile/update',{
-          e_id: this.form.company.e_id,
-          e_name: this.form.company.e_name,
-          e_introduction: this.form.company.e_introduction,
-          e_legalrepresentative:this.form.company.e_legalrepresentative,
-          e_registeredcapital: this.form.company.e_registeredcapital,
-          e_establishtime: this.form.company.e_establishtime,
-          e_type: this.form.company.e_type,
-          e_operationstatus: this.form.company. e_operationstatus,
-          e_registeredaddress:this.form.company.e_registeredaddress,
-          e_unifiedcreditcode: this.form.company.e_unifiedcreditcode,
-          e_size: this.form.company.e_size,
-          e_businessscope: this.form.company.e_businessscope,
-          e_address:this.form.company.e_address,
-          created_time: this.form.company.created_time,
-          e_logo: this.form.company.e_logo,
-        }).then(function(response){
-               console.log(_this.form)
-        })
+    updateCompany() {
+      this.$http.post('http://localhost:8085/company/profile/update', {
+        e_id: this.form.company.e_id,
+        e_name: this.form.company.e_name,
+        e_introduction: this.form.company.e_introduction,
+        e_legalrepresentative: this.form.company.e_legalrepresentative,
+        e_registeredcapital: this.form.company.e_registeredcapital,
+        e_establishtime: this.form.company.e_establishtime,
+        e_type: this.form.company.e_type,
+        e_operationstatus: this.form.company.e_operationstatus,
+        e_registeredaddress: this.form.company.e_registeredaddress,
+        e_unifiedcreditcode: this.form.company.e_unifiedcreditcode,
+        e_size: this.form.company.e_size,
+        e_businessscope: this.form.company.e_businessscope,
+        e_address: this.form.company.e_address,
+        created_time: this.form.company.created_time,
+        e_logo: this.form.company.e_logo,
+      }).then(function (response) {
+        console.log(_this.form)
+      })
         .catch(function (error) {
-        console.log(error)
-      });
-        location.reload();
+          console.log(error)
+        });
+      location.reload();
 
-      },
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePreview(file) {
-        console.log(file);
-      },
-      beforeRemove(file, fileList) {
-        return this.$confirm(`确定移除 ${ file.name }？`);
-      },
-      mouseOver: function () {
-        const dom = document.getElementsByClassName("occupy")
-        dom[0].style.opacity = 1
-      },
-      mouseOut: function () {
-        const dom = document.getElementsByClassName("occupy")
-        dom[0].style.opacity = 0
-      },
-      // 更新头像相关
-      handleSuccess(res,file){
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`);
+    },
+    mouseOver: function () {
+      const dom = document.getElementsByClassName("occupy")
+      dom[0].style.opacity = 1
+    },
+    mouseOut: function () {
+      const dom = document.getElementsByClassName("occupy")
+      dom[0].style.opacity = 0
+    },
+    // 更新头像相关
+    handleSuccess(res, file) {
       alert("上传成功");
       location.reload()
-      },
-      avatarRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      beforeAvatarUpload(file) {
-        // 判断大小
-        const isLt2M = file.size / 1024 / 1024 < 1;
-        // 判断文件类型
-        const fileSuffix = file.name.substring(file.name.lastIndexOf(".") + 1);
-        const whiteList = ["png", "jpg", "jpeg", "PNG", "JPG", "JPEG"];
-        // 判断大小
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过1MB!');
-        }
-        // 判断文件类型
-        if (whiteList.indexOf(fileSuffix) === -1) {
-          this.$message.error("上传文件只能是png, jpg, jpeg格式");
-          return false;
-        }
+    },
+    avatarRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    beforeAvatarUpload(file) {
+      // 判断大小
+      const isLt2M = file.size / 1024 / 1024 < 1;
+      // 判断文件类型
+      const fileSuffix = file.name.substring(file.name.lastIndexOf(".") + 1);
+      const whiteList = ["png", "jpg", "jpeg", "PNG", "JPG", "JPEG"];
+      // 判断大小
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过1MB!');
+      }
+      // 判断文件类型
+      if (whiteList.indexOf(fileSuffix) === -1) {
+        this.$message.error("上传文件只能是png, jpg, jpeg格式");
+        return false;
       }
     }
   }
+}
 </script>
 
 <style scoped>

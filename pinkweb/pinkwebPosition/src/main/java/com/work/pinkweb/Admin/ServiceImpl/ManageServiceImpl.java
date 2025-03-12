@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+//import com.work.pinkweb.Admin.Mapper.ManageMapper;
 import com.work.pinkweb.Admin.Mapper.ManageMapper;
 import com.work.pinkweb.Admin.Service.ManageService;
 import com.work.pinkweb.Entity.Admin;
@@ -28,7 +29,7 @@ public class ManageServiceImpl implements ManageService {
         Admin admin = manageMapper.adminLogin(admin_account);
 
         if (admin != null) {
-            if (Integer.valueOf(admin_pwd) == Integer.valueOf(admin.getAdmin_pwd())) {
+            if (Integer.valueOf(admin_pwd).equals(admin.getAdmin_pwd())) {
                 System.out.println("yew");
                 String token = TokenUtil.sign(admin);
                 HashMap<String, Object> hs = new HashMap<>();
@@ -96,8 +97,11 @@ public class ManageServiceImpl implements ManageService {
         return info;
     }
 
+    // 管理员增加用户
     @Override
-    public String manageAddUser(String admin_account, String admin_pwd, String admin_name, Integer admin_power, String apartment, String position, Date admin_time) {
+    public String manageAddUser(String admin_account, String admin_pwd, String admin_name,
+                                Integer admin_power, String apartment, String position,
+                                Date admin_time) {
         manageMapper.manageAddUser(admin_account, admin_pwd, admin_name, admin_power, apartment, position, admin_time);
         return "manageAddUser-success";
     }
