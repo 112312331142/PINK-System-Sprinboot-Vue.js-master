@@ -192,6 +192,16 @@ export default {
     this.fetchMessages()
   },
   methods: {
+    formatCurrentTime() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0'); // 月份从0开始，需加1
+      const day = String(now.getDate()).padStart(2, '0');
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    },
     // 获取用户名称的方法
     async getUserName(id) {
       try {
@@ -289,13 +299,16 @@ export default {
               m_flag: 1,                   // HR发送的消息
               m_s_id: c_id,
               m_r_id: localStorage.getItem('r_id'),
-              m_time: new Date().toISOString().slice(0, 19).replace('T', ' '),
+              m_time: this.formatCurrentTime(),
               m_content: message
             };
             targetGroup.communities.push(newMessage);
 
             // 通知子组件更新排序
             this.$refs.chatContent.getNew(targetGroup.communities);
+            this.$refs.chatContent.scrollToBottom();
+            this.fetchMessages();
+            
           }
         }
       } catch (error) {

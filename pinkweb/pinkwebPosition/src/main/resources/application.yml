@@ -21,7 +21,7 @@ spring:
       api-key: sk-dobvageguyfakmwdiwkjiwjtogauaxrwioebmckfiqpptchs
       chat:
         options:
-          model: deepseek-ai/DeepSeek-V3
+          model: deepseek-ai/DeepSeek-R1
   # qq邮箱配置
   mail:
     default-encoding: UTF-8

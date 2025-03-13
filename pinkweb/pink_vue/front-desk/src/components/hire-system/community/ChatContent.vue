@@ -71,6 +71,16 @@ export default {
     // this.getNew(this.box.communities)
   },
   methods: {
+    formatCurrentTime() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0'); // 月份从0开始，需加1
+      const day = String(now.getDate()).padStart(2, '0');
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    },
     async onSubmit() {
       // 如果消息为空，不发送
       if (!this.communication.text.trim()) {
@@ -94,7 +104,7 @@ export default {
             m_flag: 1,                    // HR发送的消息
             m_s_id: localStorage.getItem('r_id'),
             m_r_id: this.box.id,
-            m_time: new Date().toISOString().slice(0, 19).replace('T', ' '),
+            m_time: this.formatCurrentTime(),
             m_content: this.communication.text
           };
 
@@ -103,6 +113,7 @@ export default {
 
           // 重新排序消息
           this.getNew(this.box.communities);
+          
 
           // 清空输入框
           this.communication.text = '';
@@ -119,7 +130,8 @@ export default {
       for (let i = 0; i < communities.length; i++) {
         sortTimeList.push(Date.parse(communities[i].m_time))
       }
-      sortTimeList.sort();
+      sortTimeList.sort()
+      // sortTimeList.sort((a, b) => b - a);
       for (let j = 0; j < sortTimeList.length; j++) {
         for (let i = 0; i < communities.length; i++) {
           if (Date.parse(communities[i].m_time) === sortTimeList[j]) {

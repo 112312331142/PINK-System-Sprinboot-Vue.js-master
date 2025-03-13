@@ -4,3 +4,55 @@
   bottom: 30px;
   box-shadow: 2px 2px 2px #b3b3b3;
 }
+
+/* 抽屉容器样式 */
+.ai-chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 20px;
+}
+
+/* 消息显示区域样式 */
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+/* 消息样式 */
+.message {
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  border-radius: 5px;
+  max-width: 80%;
+}
+
+/* 用户消息样式 */
+.message.user {
+  background-color: #e6f7ff;
+  align-self: flex-end;
+}
+
+/* AI 消息样式 */
+.message.ai {
+  background-color: #f6f6f6;
+  align-self: flex-start;
+}
+
+/* 输入框和发送按钮样式 */
+.chat-input {
+  display: flex;
+  gap: 10px;
+}
+
+.input-area {
+  flex: 1;
+}
+
+.send-btn {
+  width: 80px;
+}

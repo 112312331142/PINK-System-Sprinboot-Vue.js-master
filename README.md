@@ -21,6 +21,14 @@ recruitment_info中的账号登录hr系统
 19204390805
 ```
 
+entterprise_admin中的账号登录company系统
+
+```
+13572695813
+```
+
+
+
 
 
 在Windows系统中，如果8080端口被占用，可以通过以下步骤来关闭该端口：
@@ -50,3 +58,21 @@ TCP 0.0.0.0:8080 0.0.0.0:0 LISTENING 22260
 在终止进程之前，请确保您不再需要该进程，并且终止该进程不会对您的系统或其他应用程序造成负面影响。如果您是在开发环境中使用8080端口，可能是其他应用程序或服务正在使用该端口。在这种情况下，您可以尝试更改您的应用程序或服务的端口号来避免冲突[2](https://blog.csdn.net/m0_64071068/article/details/123202471)。
 
 通过以上步骤，您可以有效地关闭被占用的8080端口，并确保您的应用程序能够正常运行。
+
+
+
+```mysql
+CREATE TABLE message (
+    m_id INT AUTO_INCREMENT PRIMARY KEY,
+    c_id INT NOT NULL,
+    r_id INT NOT NULL,
+    m_content TEXT NOT NULL,
+    m_time DATETIME NOT NULL,
+    FOREIGN KEY (c_id) REFERENCES user(id),
+    FOREIGN KEY (r_id) REFERENCES recruitment_info(ehrid)
+);
+
+# flag为0时表示已接受，为1表示已发送
+ ALTER TABLE message ADD flag INT(1);
+```
+

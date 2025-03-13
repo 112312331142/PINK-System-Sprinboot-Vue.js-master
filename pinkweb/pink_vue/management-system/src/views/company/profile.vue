@@ -101,11 +101,11 @@
                       </el-input>
                     </el-form-item>
                     <el-form-item label="公司许可">
-                      <el-upload ref="upload" class="upload-demo"
+                      <el-upload ref="upload" class="upload-demo" 
                         action="http://localhost:8085/company/profile/licenseImg" :data="uploadData" :limit="1"
                         :on-success="handleSuccess" :on-preview="handlePreview" :on-remove="handleRemove"
                         :before-remove="beforeRemove">
-                        <el-button size="small" type="primary" class="upload-btn">点击上传</el-button>
+                        <el-button size="small" type="primary" class="upload-btn" >点击上传</el-button>
                       </el-upload>
                     </el-form-item>
                     <el-form-item label="经营范围">
@@ -259,7 +259,11 @@ export default {
     },
     // 更新头像相关
     handleSuccess(res, file) {
-      alert("上传成功");
+      this.$message({
+        showClose: true,
+        message: '上传成功',
+        type: 'success'
+      });
       location.reload()
     },
     avatarRemove(file, fileList) {
