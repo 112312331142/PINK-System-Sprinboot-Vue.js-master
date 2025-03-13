@@ -31,9 +31,9 @@
               <!-- 查看详情按钮 -->
               <el-button @click="detailClick(scope.row)" type="text" size="small">详情</el-button>
               <!-- 删除按钮，带确认弹窗 -->
-              <!-- <el-popconfirm title="确定接受？" @confirm="acceptClick(scope.row)"> -->
-              <el-button @click="acceptClick(scope.row)" slot="reference" type="text" size="small">接受</el-button>
-              <!-- </el-popconfirm> -->
+              <el-popconfirm title="确定接受？" @confirm="acceptClick(scope.row)">
+                <el-button slot="reference" type="text" size="small">接受</el-button>
+              </el-popconfirm>
               <el-popconfirm title="确定删除？" @confirm="deleteClick(scope.row)">
                 <el-button slot="reference" type="text" size="small">删除</el-button>
               </el-popconfirm>
@@ -161,7 +161,9 @@ export default {
     deleteClick(index) {
       console.log(index);
       var _this = this
-      this.$http.get('http://localhost:8085/hire/hire_attract/delete/', {
+      console.log("-----" + index.apply_id);
+
+      this.$http.get('http://localhost:8085/hire/hire_attract/delete', {
         params: {
           apply_id: index.apply_id,
         }

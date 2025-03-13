@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="3">
         <div class="grid-content">
-          <el-tag type="info" size="mini">{{chat.type}}</el-tag>
+          <el-tag type="info" size="mini">{{ chat.type }}</el-tag>
         </div>
       </el-col>
       <el-col :span="18">
@@ -11,7 +11,7 @@
           <el-row>
             <el-col :span="24">
               <div class="chat-content">
-                {{chat.content}}
+                {{ chat.content }}
               </div>
             </el-col>
           </el-row>

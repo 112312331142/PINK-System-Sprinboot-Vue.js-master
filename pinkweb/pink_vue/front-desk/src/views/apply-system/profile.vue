@@ -110,6 +110,77 @@
           </el-dialog>
           <!-- 开通会员抽屉 -->
           <el-drawer title="开通会员" :visible.sync="drawer">
+            <div class="vip-content">
+              <div class="vip-item">
+                <div class="vip-left">
+                  <div class="vip-title">
+                    <span class="vip-name">VIP会员</span>
+                    <span class="vip-price">￥99</span>
+                  </div>
+                  <div class="vip-intro">
+                    <span class="vip-intro-left">
+                      <i class="el-icon-check"></i>
+                      <span>优先查看职位</span>
+                    </span>
+                    <span class="vip-intro-left">
+                      <i class="el-icon-check"></i>
+                      <span>专属客服支持</span>
+                    </span>
+                    <span class="vip-intro-left">
+                      <i class="el-icon-check"></i>
+                      <span>简历优化建议</span>
+                    </span>
+                    <el-button type="primary" @click="purchaseMembership('VIP')">立即购买</el-button>
+                  </div>
+                </div>
+              </div>
+              <div class="vip-item">
+                <div class="vip-left">
+                  <div class="vip-title">
+                    <span class="vip-name">SVIP会员</span>
+                    <span class="vip-price">￥199</span>
+                  </div>
+                  <div class="vip-intro">
+                    <span class="vip-intro-left">
+                      <i class="el-icon-check"></i>
+                      <span>所有VIP特权</span>
+                    </span>
+                    <span class="vip-intro-left">
+                      <i class="el-icon-check"></i>
+                      <span>面试技巧培训</span>
+                    </span>
+                    <span class="vip-intro-left">
+                      <i class="el-icon-check"></i>
+                      <span>企业推荐机会</span>
+                    </span>
+                    <el-button type="primary" @click="purchaseMembership('SVIP')">立即购买</el-button>
+                  </div>
+                </div>
+              </div>
+              <div class="vip-item">
+                <div class="vip-left">
+                  <div class="vip-title">
+                    <span class="vip-name">超级SVIP会员</span>
+                    <span class="vip-price">￥1999</span>
+                  </div>
+                  <div class="vip-intro">
+                    <span class="vip-intro-left">
+                      <i class="el-icon-check"></i>
+                      <span>所有SVIP特权</span>
+                    </span>
+                    <span class="vip-intro-left">
+                      <i class="el-icon-check"></i>
+                      <span>一对一职业规划</span>
+                    </span>
+                    <span class="vip-intro-left">
+                      <i class="el-icon-check"></i>
+                      <span>专属求职顾问</span>
+                    </span>
+                    <el-button type="primary" @click="purchaseMembership('SSVIP')">立即购买</el-button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </el-drawer>
           <!-- 附件面板 -->
           <annex-panel style="margin-top: 20px"></annex-panel>
@@ -203,6 +274,15 @@ export default {
       });
   },
   methods: {
+    purchaseMembership(type) {
+      // 调用后端接口进行购买逻辑
+      this.$message({
+        showClose: true,
+        message: '购买成功',
+        type: 'success'
+      });
+      // 可以在这里添加购买逻辑，如调用支付接口等
+    },
     // 编辑个人信息
     editInfo() {
       this.$router.push({
@@ -260,4 +340,49 @@ export default {
 
 <style scoped>
 @import "../../assets/css/apply-system/profile.css";
+
+.vip-content {
+  padding: 20px;
+}
+
+.vip-item {
+  margin-bottom: 20px;
+  border: 1px solid #ebeef5;
+  border-radius: 4px;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.vip-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.vip-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.vip-price {
+  font-size: 16px;
+  color: #ff6c6c;
+}
+
+.vip-intro {
+  display: flex;
+  flex-direction: column;
+}
+
+.vip-intro-left {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.vip-intro-left i {
+  margin-right: 5px;
+  color: #67c23a;
+}
 </style>

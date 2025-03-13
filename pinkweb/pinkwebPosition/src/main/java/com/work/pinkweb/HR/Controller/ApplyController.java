@@ -3,18 +3,18 @@ package com.work.pinkweb.HR.Controller;
 import com.github.pagehelper.PageInfo;
 import com.work.pinkweb.Entity.Apply;
 import com.work.pinkweb.HR.Service.ApplyService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 // 使用@RestController注解表明这是一个Spring MVC的控制器，用于处理HTTP请求
 @RestController
 public class ApplyController {
+    private static final Logger log = LoggerFactory.getLogger(ApplyController.class);
     // 通过@Autowired注解自动注入ApplyService实例
     @Autowired
     private ApplyService applyService;
@@ -31,6 +31,7 @@ public class ApplyController {
     // 根据Id删除申请记录
     @RequestMapping("/hire/hire_attract/delete")
     public Integer refuseApply(@RequestParam("apply_id") Integer apply_id) {
+        log.info("删除{}", apply_id);
         // 调用服务方法根据申请ID删除申请记录
         return applyService.deleteApplyById(apply_id);
     }

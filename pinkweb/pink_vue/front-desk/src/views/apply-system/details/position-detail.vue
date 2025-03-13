@@ -81,7 +81,7 @@
                     <div class="btn-content">
                       <el-popover placement="bottom" width="160" v-model="visible">
                         <div>
-                          <img src="../../../assets/img/QR/code.jpg" alt="code">
+                          <img src="../../../assets/img/QR/code.jpg" alt="code" width="80px" height="80px">
                         </div>
                         <el-button slot="reference" type="text">
                           <i class="el-icon-ice-cream-round"></i>微信一下

@@ -28,8 +28,8 @@
       </el-col>
       <el-col :span="18">
         <div class="right-content">
-          <chat-content v-for="(box, index) in chat_boxes" :key="index" :box="box" :index="index"
-            :show="connect_index" ref="chatContent"></chat-content>
+          <chat-content v-for="(box, index) in chat_boxes" :key="index" :box="box" :index="index" :show="connect_index"
+            ref="chatContent"></chat-content>
         </div>
       </el-col>
     </el-row>
@@ -40,65 +40,75 @@
 // 导入PageTitle模块
 import PageTitle from "../../components/hire-system/title/PageTitle";
 // 导入ChatBox模块
-import ChatBox from "../../components/hire-system/community/ChatBox";
+import ChatBox from "../../components/hire-system/community/ChatBox.vue";
 // 导入ChatContent模块
-import ChatContent from "../../components/hire-system/community/ChatContent";
+import ChatContent from "../../components/hire-system/community/ChatContent.vue";
 export default {
   name: "chats",
   components: { ChatContent, ChatBox, PageTitle },
+  /**
+ * data函数用于定义组件的响应式数据对象。
+ * 返回一个包含以下属性的对象：
+ * 
+ * @property {string} search - 用于存储搜索框的输入内容，初始值为空字符串。
+ * @property {string} show_chat - 控制聊天界面的显示状态，初始值为'1'。
+ * @property {number} connect_index - 表示连接索引或某种状态的数值，初始值为3。
+ * 
+ * @returns {Object} 包含组件所需的所有响应式数据属性。
+ */
   data() {
     return {
       search: '',
       show_chat: '1',
       connect_index: 0,
       chat_boxes: [
-        // {
-        //   index: 0,
-        //   id: '10001',
-        //   avatar: require('../../assets/img/avatar/avatar02.png'),
-        //   name: '马小超',
-        //   // 聊天内容
-        //   communities: [
-        //     {
-        //       // 信息id号
-        //       m_id: '01',
-        //       // 发送方或接收方判定(0是用户发送过来的，1是hr发送过去的)
-        //       m_flag: 1,
-        //       // 接收方id
-        //       m_s_id: "10001",
-        //       // 发送方id
-        //       m_r_id: "10001",
-        //       // 信息时间
-        //       m_time: '2021-07-25 15:17:07',
-        //       // 内容
-        //       m_content: '山不在高，有仙则名。水不在深，有龙则灵。'
-        //     },
-        //     {
-        //       m_id: '02',
-        //       m_flag: 0,
-        //       m_s_id: "10001",
-        //       m_r_id: "10001",
-        //       m_time: '2008-06-25 15:18:08',
-        //       m_content: '斯是陋室，惟吾德馨。苔痕上阶绿，草色入帘青。'
-        //     },
-        //     {
-        //       m_id: '03',
-        //       m_flag: 0,
-        //       m_s_id: "10001",
-        //       m_r_id: "10001",
-        //       m_time: '2020-08-25 15:18:08',
-        //       m_content: '谈笑有鸿儒，往来无白丁。可以调素琴，阅金经。'
-        //     },
-        //     {
-        //       m_id: '04',
-        //       m_flag: 1,
-        //       m_s_id: "10001",
-        //       m_r_id: "10001",
-        //       m_time: '2019-08-25 15:18:08',
-        //       m_content: '无丝竹之乱耳，无案牍之劳形。南阳诸葛庐，西蜀子云亭。孔子云：何陋之有？'
-        //     }
-        //   ]
-        // },
+        /*  {
+           index: 0,
+           id: '10001',
+           avatar: require('../../assets/img/avatar/avatar02.png'),
+           name: '马小超',
+           // 聊天内容
+           communities: [
+             {
+               // 信息id号
+               m_id: '01',
+               // 发送方或接收方判定(0是用户发送过来的，1是hr发送过去的)
+               m_flag: 1,
+               // 接收方id
+               m_s_id: "10001",
+               // 发送方id
+               m_r_id: "10001",
+               // 信息时间
+               m_time: '2021-07-25 15:17:07',
+               // 内容
+               m_content: '山不在高，有仙则名。水不在深，有龙则灵。'
+             },
+             {
+               m_id: '02',
+               m_flag: 0,
+               m_s_id: "10001",
+               m_r_id: "10001",
+               m_time: '2008-06-25 15:18:08',
+               m_content: '斯是陋室，惟吾德馨。苔痕上阶绿，草色入帘青。'
+             },
+             {
+               m_id: '03',
+               m_flag: 0,
+               m_s_id: "10001",
+               m_r_id: "10001",
+               m_time: '2020-08-25 15:18:08',
+               m_content: '谈笑有鸿儒，往来无白丁。可以调素琴，阅金经。'
+             },
+             {
+               m_id: '04',
+               m_flag: 1,
+               m_s_id: "10001",
+               m_r_id: "10001",
+               m_time: '2019-08-25 15:18:08',
+               m_content: '无丝竹之乱耳，无案牍之劳形。南阳诸葛庐，西蜀子云亭。孔子云：何陋之有？'
+             }
+           ]
+         }, */
         // {
         //   index: 1,
         //   id: '10002',
@@ -207,16 +217,17 @@ export default {
 
         // 创建一个临时对象来按 c_id 分组消息
         const messageGroups = {};
-        
+
         // 使用 for...of 循环来支持 async/await
         for (const message of response.data) {
           const c_id = message.c_id.toString();
-          
+
           // 如果这个 c_id 的分组还不存在，就创建一个新的
           if (!messageGroups[c_id]) {
             // 获取用户真实姓名
             const userName = await this.getUserName(parseInt(c_id));
-            
+            console.log("chats:name=" + userName + " " + message.m_content);
+
             messageGroups[c_id] = {
               index: Object.keys(messageGroups).length,
               id: c_id,
@@ -225,22 +236,20 @@ export default {
               communities: []
             };
           }
-
-
           // 将消息添加到对应的分组中
           messageGroups[c_id].communities.push({
             m_id: message.m_id.toString(),
             m_flag: message.flag,
-            m_s_id: message.r_id.toString(),
-            m_r_id: message.c_id.toString(),
+            m_s_id: message.c_id.toString(),
+            m_r_id: message.r_id.toString(),
             m_time: message.m_time,
             m_content: message.m_content
           });
         }
-        
+
         // 将分组后的结果转换为数组并赋值给 chat_boxes
         _this.chat_boxes = Object.values(messageGroups);
-        
+
         console.log("回显信息成功", _this.chat_boxes);
       } catch (error) {
         console.log("回显信息失败：", error);
@@ -256,7 +265,10 @@ export default {
     },
     // 获取子组件传来的值
     getFromChild(index) {
+      
       this.connect_index = index
+      console.log("子组件传来的值：" + this.connect_index);
+
     },
     async sendMessage(message, c_id) {
       try {
@@ -281,7 +293,7 @@ export default {
               m_content: message
             };
             targetGroup.communities.push(newMessage);
-            
+
             // 通知子组件更新排序
             this.$refs.chatContent.getNew(targetGroup.communities);
           }
@@ -289,6 +301,11 @@ export default {
       } catch (error) {
         console.log("发送消息失败：", error);
       }
+    }
+  },
+  watch: {
+    connect_index(newVal) {
+      console.log("connect_index 变化为：" + newVal);
     }
   }
 }

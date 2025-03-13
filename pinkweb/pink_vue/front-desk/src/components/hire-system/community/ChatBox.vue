@@ -5,8 +5,8 @@
         <img :src="box.avatar" alt="" class="avatar-img">
       </el-col>
       <el-col :span="14" class="chat-info">
-        <div class="chat-name">{{box.name}}</div>
-        <div class="chat-content">{{show_content}}</div>
+        <div class="chat-name">{{ box.name }}</div>
+        <div class="chat-content">{{ show_content }}</div>
       </el-col>
       <el-col :span="4" class="chat-delete">
         <div class="delete">
@@ -44,7 +44,9 @@ export default {
     },
     // 子传父
     passIndex() {
-      this.$emit("func", this.index)
+      console.log("ChatBox " + this.box.index);
+      
+      this.$emit("func", this.box.index)
     },
     // 获取最新聊天记录
     getNew(communities) {
@@ -71,7 +73,7 @@ export default {
     }
   },
   mounted() {
-    const communities =  this.box.communities;
+    const communities = this.box.communities;
     const longString = this.getNew(communities);
     const get_content = this.cutLong(longString);
     this.show_content = get_content;
