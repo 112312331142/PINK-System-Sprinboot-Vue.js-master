@@ -32,3 +32,8 @@
   overflow: auto;
   height: 543px;
 }
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+

@@ -8,7 +8,7 @@
       <div>
         <el-header>
           <div class="left-buttons">
-            <button class="el-button el-button--success" @click="AddVisible = true" v-if="account1===account">
+            <button class="el-button el-button--success" @click="AddVisible = true" v-if="account1 === account">
               <i class="el-icon-edit"></i>
               新增
             </button>
@@ -41,13 +41,14 @@
                 <el-input v-model="add_admin.position" autocomplete="off"></el-input>
               </el-form-item>
               <el-form-item label="生日：" :label-width="formLabelWidth">
-                <el-date-picker type="date" placeholder="选择日期" v-model="add_admin.admin_time" style="width: 100%;"></el-date-picker>
+                <el-date-picker type="date" placeholder="选择日期" v-model="add_admin.admin_time"
+                  style="width: 100%;"></el-date-picker>
               </el-form-item>
 
             </el-form>
             <div slot="footer" class="dialog-footer">
               <el-button @click="AddVisible = false">取 消</el-button>
-              <el-button type="primary" @click="AddVisible = false,addAdmin()">确 定</el-button>
+              <el-button type="primary" @click="AddVisible = false, addAdmin()">确 定</el-button>
             </div>
           </el-dialog>
           <div class="right-research">
@@ -57,7 +58,8 @@
           </div>
         </el-header>
         <el-main>
-          <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChange" stripe>
+          <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%"
+            @selection-change="handleSelectionChange" stripe>
             <el-table-column type="selection" width="70"></el-table-column>
             <el-table-column prop="admin_id" label="编号" width="120"></el-table-column>
             <el-table-column prop="admin_name" label="用户名" width="170"></el-table-column>
@@ -66,8 +68,8 @@
             </el-table-column>
             <el-table-column prop="apartment" label="部门" width="170"></el-table-column>
             <el-table-column prop="position" label="职位" width="170"></el-table-column>
-            <el-table-column label="操作" >
-              <template slot-scope="scope" v-if="account1===account">
+            <el-table-column label="操作">
+              <template slot-scope="scope" v-if="account1 === account">
                 <el-button size="mini" type="text" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                 <el-button size="mini" type="text" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
               </template>
@@ -86,7 +88,7 @@
               <el-input v-model="edit_admin.admin_account" autocomplete="off" :disabled="true"></el-input>
             </el-form-item>
             <el-form-item label="密码：" :label-width="formLabelWidth">
-              <el-input  v-model="edit_admin.admin_pwd" autocomplete="off" :disabled="true"></el-input>
+              <el-input v-model="edit_admin.admin_pwd" autocomplete="off" :disabled="true"></el-input>
             </el-form-item>
             <el-form-item label="权限：" :label-width="formLabelWidth">
               <el-select v-model="edit_admin.admin_power" placeholder="请选择权限">
@@ -97,7 +99,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="EditVisible = false">取 消</el-button>
-            <el-button type="primary" @click="EditVisible = false,editAdmin()">确 定</el-button>
+            <el-button type="primary" @click="EditVisible = false, editAdmin()">确 定</el-button>
           </div>
         </el-dialog>
       </div>
@@ -110,8 +112,8 @@ export default {
   name: "manage_admin",
   data() {
     return {
-      account1 : localStorage.getItem("admin_account"),
-      account : "17786143697",
+      account1: localStorage.getItem("admin_account"),
+      account: "17786143697",
       //每页显示的条数
       size: 6,
       //总条数
@@ -150,36 +152,49 @@ export default {
       formLabelWidth: '120px'
     }
   },
-  created(){
-          var that = this
-          this.$http.post('http://localhost:8085/admin/manage_admin/getAllAdmin?key='+this.$route.query.key+"&flag="+this.$route.query.flag,{
-            params:{
-              pageNow: this.pageNow,
-              pageSize: this.size
-            }
-          })
-       .then(function (response) {
-          that.tableData = []
-          for(var len = (that.pageNow-1)*that.size ;len<=that.pageNow*that.size-1;len++){
-            if(len>=response.data.list.length){
-              break;
-            }
-              that.tableData.push(response.data.list[len])
-            }
-            console.log(that.tableData)
-            //that.total=response.data.total
+  created() {
+    // 打印管理员信息的关键字和标志
+    console.log("Admin:" + this.$route.query.key + " " + this.$route.query.flag);
 
+    // 保存当前上下文的引用
+    var that = this
 
-        that.total=response.data.total
+    // 发送POST请求获取管理员列表
+    this.$http.post('http://localhost:8085/admin/manage_admin/getAllAdmin?key='
+      + "getAdminByID" + "&flag=1", {
+      params: {
+        pageNow: this.pageNow,
+        pageSize: this.size
+      }
+    })
+      .then(function (response) {
+        // 清空表格数据数组
+        that.tableData = []
+        // 遍历响应的数据并填充表格数据数组
+        for (var len = (that.pageNow - 1) * that.size; len <= that.pageNow * that.size - 1; len++) {
+          // 检查数据长度以防止越界
+          if (len >= response.data.list.length) {
+            break;
+          }
+          that.tableData.push(response.data.list[len])
+        }
+        // 打印表格数据
+        console.log(that.tableData)
+        // 启用分页功能时，取消注释以设置总记录数
+        //that.total=response.data.total
+
+        // 设置总记录数
+        that.total = response.data.total
       })
       .catch(function (error) {
+        // 打印错误信息
         console.log(error);
       });
   },
   methods: {
-    addAdmin(){
-      this.$http.post('http://localhost:8085/admin/manage_admin/add',{
-        params:{
+    addAdmin() {
+      this.$http.post('http://localhost:8085/admin/manage_admin/add', {
+        params: {
           admin_account: this.add_admin.admin_account,
           admin_pwd: this.add_admin.admin_pwd,
           admin_name: this.add_admin.admin_name,
@@ -189,33 +204,33 @@ export default {
           admin_time: this.add_admin.admin_time,
         }
       })
-      .then(function (response) {
-        console.log(response)
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
-    editAdmin(){
-      this.$http.post('http://localhost:8085/admin/manage_admin/edit',{
-        params:{
+    editAdmin() {
+      this.$http.post('http://localhost:8085/admin/manage_admin/edit', {
+        params: {
           admin_name: this.edit_admin.admin_name,
           admin_pwd: this.edit_admin.admin_pwd,
           admin_id: this.edit_admin.admin_id,
           admin_power: this.edit_admin.admin_power,
         }
       })
-      .then(function (response) {
-        console.log(response)
-        alert("修改成功")
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+        .then(function (response) {
+          console.log(response)
+          alert("修改成功")
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
       console.log(index, row);
     },
-         searchHandler(){
-       this.$router.push({
+    searchHandler() {
+      this.$router.push({
         path: '/admin/manage_admin',
         query: {
           key: "搜索",
@@ -224,41 +239,41 @@ export default {
       })
       location.reload()
     },
-        handleSizeChange(size){
-          console.log("当每页条数改变时"+size);
-          this.size = size;
-          this.findAll(this.pageNow, this.size)
+    handleSizeChange(size) {
+      console.log("当每页条数改变时" + size);
+      this.size = size;
+      this.findAll(this.pageNow, this.size)
 
-        },
-        handleCurrentChange(){
-          console.log("当前页面"+this.pageNow);
+    },
+    handleCurrentChange() {
+      console.log("当前页面" + this.pageNow);
 
-           this.findAll(this.pageNow, this.size)
+      this.findAll(this.pageNow, this.size)
 
-        },
+    },
 
-        findAll(page, size){
-          var that = this
-          this.$http.post('http://localhost:8085/admin/manage_admin/getAllAdmin?key='+this.$route.query.key+"&flag="+this.$route.query.flag,{
-            params:{
-              pageNow: this.pageNow,
-              pageSize: this.size
-            }
-          })
-       .then(function (response) {
+    findAll(page, size) {
+      var that = this
+      this.$http.post('http://localhost:8085/admin/manage_admin/getAllAdmin?key=' + this.$route.query.key + "&flag=" + this.$route.query.flag, {
+        params: {
+          pageNow: this.pageNow,
+          pageSize: this.size
+        }
+      })
+        .then(function (response) {
 
           that.tableData = []
-          for(var len = (that.pageNow-1)*that.size ;len<=that.pageNow*that.size-1;len++){
-            if(len>=response.data.list.length){
+          for (var len = (that.pageNow - 1) * that.size; len <= that.pageNow * that.size - 1; len++) {
+            if (len >= response.data.list.length) {
               break;
             }
-              that.tableData.push(response.data.list[len])
-            }
-        that.total=response.data.total
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+            that.tableData.push(response.data.list[len])
+          }
+          that.total = response.data.total
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
     toggleSelection(rows) {
       if (rows) {
@@ -274,25 +289,25 @@ export default {
     },
     handleEdit(index, row) {
       this.EditVisible = true;
-        var that = this
-        this.$http.post('http://localhost:8085/admin/manage_admin/getAllAdmin?key=getAdminByID'+"&flag="+row.admin_id,{
-            params:{
-              pageNow: this.pageNow,
-              pageSize: this.size
-            }
-          })
-       .then(function (response) {
-        console.log(response)
-        that.edit_admin.admin_id = response.data.list[0].admin_id
-        that.edit_admin.admin_account = response.data.list[0].admin_account
-        that.edit_admin.admin_pwd = response.data.list[0].admin_pwd
-        that.edit_admin.admin_name = response.data.list[0].admin_name
-        that.edit_admin.admin_power = response.data.list[0].admin_power
-        that.edit_admin.apartment = response.data.list[0].apartment
+      var that = this
+      this.$http.post('http://localhost:8085/admin/manage_admin/getAllAdmin?key=getAdminByID' + "&flag=" + row.admin_id, {
+        params: {
+          pageNow: this.pageNow,
+          pageSize: this.size
+        }
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+        .then(function (response) {
+          console.log(response)
+          that.edit_admin.admin_id = response.data.list[0].admin_id
+          that.edit_admin.admin_account = response.data.list[0].admin_account
+          that.edit_admin.admin_pwd = response.data.list[0].admin_pwd
+          that.edit_admin.admin_name = response.data.list[0].admin_name
+          that.edit_admin.admin_power = response.data.list[0].admin_power
+          that.edit_admin.apartment = response.data.list[0].apartment
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
 
 
     },

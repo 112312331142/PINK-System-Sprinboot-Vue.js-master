@@ -87,6 +87,7 @@
         from apply
         where apply_id = #{apply_id}
     </delete>
+
     <select id="getCandidateByApply" resultMap="ApplyEntityMap">
         select a.*, u.*, c.*, r.url
         from apply a

@@ -229,7 +229,21 @@ export default {
 
           const blob = new Blob([res.data]);
           // 获取文件名称
-          const fileName = res.headers['content-disposition'].split(";")[1].split("filename=")[1];
+          let fileName = "简历.pdf";
+          // 检查 Content-Disposition 头是否存在
+          if (res.headers['content-disposition']) {
+            try {
+              // 解析文件名
+              const disposition = res.headers['content-disposition'];
+              const filenameMatch = disposition.match(/filename="?(.+)"?/);
+              if (filenameMatch && filenameMatch[1]) {
+                fileName = filenameMatch[1];
+              }
+              console.log(fileName);
+            } catch (e) {
+              console.error('解析文件名时出错:', e);
+            }
+          }
           //对于<a>标签，只有 Firefox 和 Chrome（内核） 支持 download 属性
           //IE10以上支持blob，但是依然不支持download
           if ('download' in document.createElement('a')) {

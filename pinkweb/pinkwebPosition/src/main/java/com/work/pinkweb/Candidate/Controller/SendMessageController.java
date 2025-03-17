@@ -59,7 +59,7 @@ public class SendMessageController {
         String c_id = data.get("u_id").toString();
         String r_id = data.get("p_id").toString();
         String message = data.get("message");
-
+//        String u_id = sendMessageService.getUIdByApplyId(c_id);
         System.out.println("Received message from user " + c_id + " to project " +
                 r_id + ": " + message);
         sendMessageService.sendMessageHr(c_id, r_id, message, 1);

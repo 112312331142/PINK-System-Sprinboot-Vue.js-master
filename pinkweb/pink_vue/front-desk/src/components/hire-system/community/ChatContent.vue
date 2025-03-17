@@ -96,6 +96,7 @@ export default {
             message: this.communication.text        // 消息内容
           }
         });
+        
 
         if (response.data === "Message received successfully") {
           // 发送成功后，在本地添加新消息

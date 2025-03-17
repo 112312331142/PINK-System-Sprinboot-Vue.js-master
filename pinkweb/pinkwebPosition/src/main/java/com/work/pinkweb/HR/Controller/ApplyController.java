@@ -40,7 +40,7 @@ public class ApplyController {
      * 处理每日申请详情请求
      * 该方法用于获取特定资源在多个日期的申请人数统计
      *
-     * @param r_id 资源ID，用于指定需要查询的资源
+     * @param r_id  资源ID，用于指定需要查询的资源
      * @param dates 日期字符串，包含多个日期，格式为"MM-dd&MM-dd&..."
      * @return 返回一个整数列表，每个元素代表对应日期的申请人数
      */

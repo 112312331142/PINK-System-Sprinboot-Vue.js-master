@@ -5,6 +5,7 @@ import com.work.pinkweb.HR.Service.UserService;
 import com.work.pinkweb.utils.FileUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,4 +64,6 @@ public class UserController {
         // 返回上传成功消息
         return "上传成功";
     }
+
+
 }

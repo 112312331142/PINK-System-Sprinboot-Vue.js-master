@@ -12,7 +12,8 @@
     <el-main class="main">
       <div>
         <el-main>
-          <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChange" stripe>
+          <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%"
+            @selection-change="handleSelectionChange" stripe>
             <el-table-column type="selection" width="70"></el-table-column>
             <el-table-column prop="id" label="编号" width="120"></el-table-column>
             <el-table-column prop="name" label="姓名" width="200"></el-table-column>
@@ -28,13 +29,8 @@
           <div style="margin-top: 20px">
             <el-button @click="toggleSelection()" class="foot-button">取消选择</el-button>
             <div class="post-pagination">
-              <el-pagination background
-              @size-change="handleSizeChange"
-              @current-change="handleCurrentChange"
-              :current-page.sync="pageNow"
-              :page-size="size"
-              layout="total, prev, pager, next"
-              :total="total">
+              <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                :current-page.sync="pageNow" :page-size="size" layout="total, prev, pager, next" :total="total">
               </el-pagination>
             </div>
           </div>
@@ -92,33 +88,30 @@ export default {
       formLabelWidth: '120px'
     }
   },
-  created(){
+  created() {
     var that = this
-    this.$http.post('http://localhost:8085/admin/manage_user/getAllUser?key='+this.$route.query.key+"&flag="+this.$route.query.flag,{
-      params:{
+    this.$http.post('http://localhost:8085/admin/manage_user/getAllUser?key=' + this.$route.query.key + "&flag=" + this.$route.query.flag, {
+      params: {
         pageNow: 1,
         pageSize: 6
       }
     })
-    .then(function (response) {
-          that.tableData = []
-          for(var len = (that.pageNow-1)*that.size ;len<=that.pageNow*that.size-1;len++){
-            if(len>=response.data.list.length){
-              break;
-            }
-              that.tableData.push(response.data.list[len])
-            }
-            //that.total=response.data.total
-
-
-        that.total=response.data.total
-      console.log(response)
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+      .then(function (response) {
+        that.tableData = []
+        for (var len = (that.pageNow - 1) * that.size; len <= that.pageNow * that.size - 1; len++) {
+          if (len >= response.data.list.length) {
+            break;
+          }
+          that.tableData.push(response.data.list[len])
+        }
+        that.total = response.data.total
+        console.log(response)
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     var that = this
-    this.$http.get('http://localhost:8085/index/apply_edit/'+this.tableData[0].id)
+    this.$http.get('http://localhost:8085/index/apply_edit/' + this.tableData[0].id)
       .then(function (response) {
 
         that.detail.push(response.data)
@@ -132,8 +125,8 @@ export default {
       })
   },
   methods: {
-      searchHandler(){
-       this.$router.push({
+    searchHandler() {
+      this.$router.push({
         path: '/admin/manage_user',
         query: {
           key: "搜索",
@@ -142,40 +135,40 @@ export default {
       })
       location.reload()
     },
-        handleSizeChange(size){
-          console.log("当每页条数改变时"+size);
-          this.size = size;
-          this.findAll(this.pageNow, this.size)
-        },
-        handleCurrentChange(){
-          console.log("当前页面"+this.pageNow);
+    handleSizeChange(size) {
+      console.log("当每页条数改变时" + size);
+      this.size = size;
+      this.findAll(this.pageNow, this.size)
+    },
+    handleCurrentChange() {
+      console.log("当前页面" + this.pageNow);
 
-           this.findAll(this.pageNow, this.size)
+      this.findAll(this.pageNow, this.size)
 
-        },
+    },
 
-        findAll(page, size){
-          var that = this
-          this.$http.post('http://localhost:8085/admin/manage_user/getAllUser?key='+this.$route.query.key+"&flag="+this.$route.query.flag,{
-            params:{
-              pageNow: this.pageNow,
-              pageSize: this.size
-            }
-          })
-       .then(function (response) {
+    findAll(page, size) {
+      var that = this
+      this.$http.post('http://localhost:8085/admin/manage_user/getAllUser?key=' + this.$route.query.key + "&flag=" + this.$route.query.flag, {
+        params: {
+          pageNow: this.pageNow,
+          pageSize: this.size
+        }
+      })
+        .then(function (response) {
 
           that.tableData = []
-          for(var len = (that.pageNow-1)*that.size ;len<=that.pageNow*that.size-1;len++){
-            if(len>=response.data.list.length){
+          for (var len = (that.pageNow - 1) * that.size; len <= that.pageNow * that.size - 1; len++) {
+            if (len >= response.data.list.length) {
               break;
             }
-              that.tableData.push(response.data.list[len])
-            }
-        that.total=response.data.total
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+            that.tableData.push(response.data.list[len])
+          }
+          that.total = response.data.total
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
     toggleSelection(rows) {
       if (rows) {
@@ -193,27 +186,27 @@ export default {
     },
     handleDetail(index, row) {
       this.detailVisible = true;
-      this.detail=[]
+      this.detail = []
       var that = this
-        this.$http.get('http://localhost:8085/index/apply_edit/'+row.id)
-       .then(function (response) {
-        that.detail.push(response.data)
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+      this.$http.get('http://localhost:8085/index/apply_edit/' + row.id)
+        .then(function (response) {
+          that.detail.push(response.data)
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
     handleDelete(index, row) {
       console.log(index, row);
       var that = this
-        this.$http.get('http://localhost:8085/admin/manage_user/delete/'+row.id)
-       .then(function (response) {
+      this.$http.get('http://localhost:8085/admin/manage_user/delete/' + row.id)
+        .then(function (response) {
           alert("删除成功")
           location.reload();
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
     deleteClick(e) {
       console.log(e)

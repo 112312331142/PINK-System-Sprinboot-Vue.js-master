@@ -54,7 +54,7 @@ public class ManageController {
     }
 
 
-    //管理员管理
+    // 管理员管理
     @PostMapping("/admin/manage_admin/getAllAdmin")
     public PageInfo<Admin> getAdminByCondition(@RequestBody Map<String, Map> para,
                                                @RequestParam(value = "key", required = false) String key,

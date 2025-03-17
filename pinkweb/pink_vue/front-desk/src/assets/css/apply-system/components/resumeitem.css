@@ -27,6 +27,13 @@
 .resume-btn {
   color: #61687c;
   font-size: 13px;
+  border: 1px solid #cdcdcd;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 .time-content {
   text-align: right;

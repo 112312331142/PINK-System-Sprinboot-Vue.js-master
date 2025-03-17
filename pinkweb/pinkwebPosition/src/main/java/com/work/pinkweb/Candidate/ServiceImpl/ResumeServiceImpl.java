@@ -32,12 +32,13 @@ public class ResumeServiceImpl implements ResumeService {
     private LoginMapper loginMapper;
     @Autowired
     private EditMapper editMapper;
+
     @Override
     public String uploadResumePDF(Integer uid, String name, String url, Date created_time, MultipartFile file) {
         Integer count = resumeMapper.countResumePDF(uid);
-        if(count>=3){
+        if (count >= 3) {
             return "已经上传了三份简历";
-        }else{
+        } else {
             try {
                 FileUtil.uploadFile(file.getBytes(), url, name);
             } catch (Exception e) {
@@ -49,13 +50,15 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
     @Override
-    public List<Resume> findAllResumePDF(Integer c_id) {return resumeMapper.findAllResumePDF(c_id);}
+    public List<Resume> findAllResumePDF(Integer c_id) {
+        return resumeMapper.findAllResumePDF(c_id);
+    }
 
     @Override
     public String deleteResumePDF(Integer r_id) {
         Resume resume = resumeMapper.findResumePDF(r_id);
         resumeMapper.deleteResumePDF(r_id);
-        FileSystemUtils.deleteRecursively(new File(resume.getUrl()+"//"+resume.getName()));
+        FileSystemUtils.deleteRecursively(new File(resume.getUrl() + "//" + resume.getName()));
         return "deleteResumePDF-success";
     }
 
@@ -66,27 +69,27 @@ public class ResumeServiceImpl implements ResumeService {
         Map<String, Object> wordDataMap = new HashMap<String, Object>();  // 存储报表全部数据
         Map<String, Object> parametersMap = new HashMap<String, Object>();// 存储报表中不循环的数据
         String sex = "";
-        if(user.getSex()==1){
+        if (user.getSex() == 1) {
             sex = "女";
-        }else{
+        } else {
             sex = "男";
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println(user.getBirthday());
         //替换段落标签
-        String[] info_flag=   {"name","position","birthday","sex","phone","email","edu1start","edu1last","edu1school","edu1subject","edu2start","edu2last","edu2school","edu2subject","wor1start","wor1last","wor1company","wor1position","wor1duty","wor2start","wor2last","wor2company","wor2position","wor2duty","selfIntroduction"};
-        String[] info_addr= {user.getName(),"java工程师",sdf.format(user.getBirthday()),sex,user.getPhone(),user.getEmail(),sdf.format(candidate.getC_ftime()),sdf.format(candidate.getC_stime()),candidate.getC_fschool(),candidate.getC_fmajor(),sdf.format(candidate.getC_stime()),sdf.format(candidate.getC_stime()),candidate.getC_sschool(),candidate.getC_smajor(),sdf.format(candidate.getC_finternship_stime()),sdf.format(candidate.getC_finternship_etime())
-                ,candidate.getC_finternship_enterprise(),candidate.getC_finternship_job(),"下载后填写",sdf.format(candidate.getC_sinternship_stime()),sdf.format(candidate.getC_sinternship_etime()),candidate.getC_sinternship_enterprise(),candidate.getC_sinternship_job(),"下载后填写",candidate.getC_intro()};
-        for(int i=0;i<info_flag.length;i++) {
+        String[] info_flag = {"name", "position", "birthday", "sex", "phone", "email", "edu1start", "edu1last", "edu1school", "edu1subject", "edu2start", "edu2last", "edu2school", "edu2subject", "wor1start", "wor1last", "wor1company", "wor1position", "wor1duty", "wor2start", "wor2last", "wor2company", "wor2position", "wor2duty", "selfIntroduction"};
+        String[] info_addr = {user.getName(), "java工程师", sdf.format(user.getBirthday()), sex, user.getPhone(), user.getEmail(), sdf.format(candidate.getC_ftime()), sdf.format(candidate.getC_stime()), candidate.getC_fschool(), candidate.getC_fmajor(), sdf.format(candidate.getC_stime()), sdf.format(candidate.getC_stime()), candidate.getC_sschool(), candidate.getC_smajor(), sdf.format(candidate.getC_finternship_stime()), sdf.format(candidate.getC_finternship_etime())
+                , candidate.getC_finternship_enterprise(), candidate.getC_finternship_job(), "下载后填写", sdf.format(candidate.getC_sinternship_stime()), sdf.format(candidate.getC_sinternship_etime()), candidate.getC_sinternship_enterprise(), candidate.getC_sinternship_job(), "下载后填写", candidate.getC_intro()};
+        for (int i = 0; i < info_flag.length; i++) {
             parametersMap.put(info_flag[i], info_addr[i]);
         }
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  //设置日期格式
         parametersMap.put("outputTime", df.format(new Date()));
 
         //替换段落图片
-        String[] pic_flag=   {"avator"};
-        String[] pic_addr= {"file\\avator.jpg"};
-        for(int i=0;i<pic_flag.length;i++) {
+        String[] pic_flag = {"avator"};
+        String[] pic_addr = {"file\\avator.jpg"};
+        for (int i = 0; i < pic_flag.length; i++) {
             parametersMap.put(pic_flag[i], pic_addr[i]);
         }
 
@@ -103,18 +106,18 @@ public class ResumeServiceImpl implements ResumeService {
 
 
         //生成文件
-        File dir = new File("target\\classes\\static\\out\\"+user.getPhone());
+        File dir = new File("target\\classes\\static\\out\\" + user.getPhone());
         if (!dir.exists()) {// 判断目录是否存在
             dir.mkdirs();
         }
-        File outputFile = new File("target\\classes\\static\\out\\"+user.getPhone()+"\\" + m_id.toString() + ".docx");  //可改成你想要模板文件所在目录
+        File outputFile = new File("target\\classes\\static\\out\\" + user.getPhone() + "\\" + m_id.toString() + ".docx");  //可改成你想要模板文件所在目录
         FileOutputStream fos = new FileOutputStream(outputFile);
         template.getDocument().write(fos);
         fos.flush();
         fos.close();
 
-        File outputFilePdf = new File("target\\classes\\static\\out\\" +user.getPhone()+"\\"+ m_id.toString() + ".pdf");
-        File outputFileWord = new File("target\\classes\\static\\out\\" +user.getPhone()+"\\"+ m_id.toString() + ".docx");  //可改成你想要模板文件所在目录
+        File outputFilePdf = new File("target\\classes\\static\\out\\" + user.getPhone() + "\\" + m_id.toString() + ".pdf");
+        File outputFileWord = new File("target\\classes\\static\\out\\" + user.getPhone() + "\\" + m_id.toString() + ".docx");  //可改成你想要模板文件所在目录
         try {
             InputStream docxInputStream = new FileInputStream(outputFileWord);
             OutputStream outputStream = new FileOutputStream(outputFilePdf);
@@ -133,7 +136,7 @@ public class ResumeServiceImpl implements ResumeService {
     @Override
     public String resumeDownload(HttpServletResponse response, Integer r_id) {
         Resume resume = resumeMapper.findResumePDF(r_id);
-        String path = resume.getUrl()+"/"+resume.getName();
+        String path = resume.getUrl() + "/" + resume.getName();
         File file = new File(path);
         // 文件名称
         String filename = file.getName();
@@ -148,10 +151,10 @@ public class ResumeServiceImpl implements ResumeService {
                 // 将响应头中的Content-Disposition暴露出来 ， 不然前端获取不到
                 response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
                 // 在响应头中的Content-Disposition里设置文件名称
-                response.setHeader("Content-Disposition","attachment;filename="+filename);
+                response.setHeader("Content-Disposition", "attachment;filename=" + filename);
                 os = response.getOutputStream();
                 bis = new BufferedInputStream(new FileInputStream(file));
-                while(bis.read(buffer) != -1){
+                while (bis.read(buffer) != -1) {
                     os.write(buffer);
                 }
             }
@@ -159,10 +162,10 @@ public class ResumeServiceImpl implements ResumeService {
             e.printStackTrace();
         } finally {
             try {
-                if(bis != null) {
+                if (bis != null) {
                     bis.close();
                 }
-                if(os != null) {
+                if (os != null) {
                     os.flush();
                     os.close();
                 }
@@ -175,7 +178,7 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public String resumeTmpDownload(HttpServletResponse response, Integer m_id, String phone) {
-        File file = new File("target\\classes\\static\\out\\" +phone.toString()+"\\"+ m_id.toString() + ".docx");
+        File file = new File("target\\classes\\static\\out\\" + phone.toString() + "\\" + m_id.toString() + ".docx");
         // 文件名称
         String filename = file.getName();
         byte[] buffer = new byte[1024];
@@ -189,10 +192,10 @@ public class ResumeServiceImpl implements ResumeService {
                 // 将响应头中的Content-Disposition暴露出来 ， 不然前端获取不到
                 response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
                 // 在响应头中的Content-Disposition里设置文件名称
-                response.setHeader("Content-Disposition","attachment;filename="+filename);
+                response.setHeader("Content-Disposition", "attachment;filename=" + filename);
                 os = response.getOutputStream();
                 bis = new BufferedInputStream(new FileInputStream(file));
-                while(bis.read(buffer) != -1){
+                while (bis.read(buffer) != -1) {
                     os.write(buffer);
                 }
             }
@@ -200,10 +203,10 @@ public class ResumeServiceImpl implements ResumeService {
             e.printStackTrace();
         } finally {
             try {
-                if(bis != null) {
+                if (bis != null) {
                     bis.close();
                 }
-                if(os != null) {
+                if (os != null) {
                     os.flush();
                     os.close();
                 }

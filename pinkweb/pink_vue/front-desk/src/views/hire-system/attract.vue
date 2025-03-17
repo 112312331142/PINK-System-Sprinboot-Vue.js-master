@@ -111,11 +111,6 @@ export default {
       this.size = size;
       this.findAll()
     },
-    // 当页码改变时的处理函数
-    findPage() {
-      console.log(this.pageNow)
-      this.findAll(this.pageNow, this.size)
-    },
     // 获取数据的函数
     findAll(page, size) {
       var that = this
@@ -146,6 +141,11 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+    },
+    // 当页码改变时的处理函数
+    findPage() {
+      console.log(this.pageNow)
+      this.findAll(this.pageNow, this.size)
     },
     // 点击详情按钮时的处理函数
     detailClick(index) {

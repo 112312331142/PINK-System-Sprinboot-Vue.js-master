@@ -13,7 +13,8 @@
               </el-input>
             </el-col>
             <el-col :span="4" class="new-col">
-              <span id="new_btn" class="new-btn" @mouseout="mouseOut" @mouseover="mouseOver">
+              <span id="new_btn" class="new-btn" @mouseout="mouseOut" @mouseover="mouseOver"
+                @click="userListVisible = true">
                 <i class="el-icon-plus"></i>
               </span>
             </el-col>
@@ -33,6 +34,54 @@
         </div>
       </el-col>
     </el-row>
+    <!-- 用户列表弹窗 -->
+    <!--     <el-dialog title="用户列表" :visible.sync="userListVisible" width="70%" :data="userList">
+      <el-table :data="paginatedUserList" style="width: 100%" border>
+        <el-table-column prop="id" label="用户ID" width="120"></el-table-column>
+        <el-table-column prop="avatar" label="头像">
+          <template slot-scope="scope">
+            <img :src="scope.row.avatar" alt="" class="avatar-img" width="40px" />
+          </template>
+</el-table-column>
+<el-table-column prop="name" label="用户名" width="180"></el-table-column>
+<el-table-column prop="email" label="邮箱"></el-table-column>
+<el-table-column prop="phone" label="电话"></el-table-column>
+<el-table-column label="操作" width="120">
+  <template slot-scope="scope">
+            <el-button type="text" @click="selectUser(scope.row)">选择</el-button>
+          </template>
+</el-table-column>
+</el-table>
+
+<el-pagination class="pagination" layout="prev, pager, next" :total="userList.length" :page-size="pageSize"
+  :current-page="pageNow" @current-change="handlePageChange">
+</el-pagination>
+</el-dialog> -->
+    <el-dialog title="用户列表" :visible.sync="userListVisible" width="70%">
+      <el-table :data="userList" style="width: 100%" border>
+        <!-- 申请者ID -->
+        <el-table-column prop="apply_id" label="ID" width="100" />
+        <!-- 申请者姓名 -->
+        <el-table-column prop="candidate.user.name" label="姓名" width="120" sortable />
+        <!-- 申请时间 -->
+        <el-table-column prop="created_time" label="申请时间" width="150" sortable />
+        <!-- 毕业院校 -->
+        <el-table-column prop="candidate.highSchool" label="毕业院校" width="160" sortable />
+        <!-- 学历 -->
+        <el-table-column prop="candidate.highDegree" label="学历" width="120" sortable />
+        <!-- 申请岗位 -->
+        <el-table-column prop="recruitment.r_name" label="申请岗位" width="130" sortable />
+        <el-table-column label="操作" width="120">
+          <template slot-scope="scope">
+            <el-button type="text" @click="selectUser(scope.row)">选择</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <!-- 分页组件 -->
+      <el-pagination class="pagination" background @size-change="findSizeChange" @current-change="findPage"
+        :current-page.sync="pageNow" :page-size="size" layout="total, prev, pager, next" :total="total">
+      </el-pagination>
+    </el-dialog>
   </div>
 </template>
 
@@ -61,137 +110,103 @@ export default {
       search: '',
       show_chat: '1',
       connect_index: 0,
+      userListVisible: false,
       chat_boxes: [
-        /*  {
-           index: 0,
-           id: '10001',
-           avatar: require('../../assets/img/avatar/avatar02.png'),
-           name: '马小超',
-           // 聊天内容
-           communities: [
-             {
-               // 信息id号
-               m_id: '01',
-               // 发送方或接收方判定(0是用户发送过来的，1是hr发送过去的)
-               m_flag: 1,
-               // 接收方id
-               m_s_id: "10001",
-               // 发送方id
-               m_r_id: "10001",
-               // 信息时间
-               m_time: '2021-07-25 15:17:07',
-               // 内容
-               m_content: '山不在高，有仙则名。水不在深，有龙则灵。'
-             },
-             {
-               m_id: '02',
-               m_flag: 0,
-               m_s_id: "10001",
-               m_r_id: "10001",
-               m_time: '2008-06-25 15:18:08',
-               m_content: '斯是陋室，惟吾德馨。苔痕上阶绿，草色入帘青。'
-             },
-             {
-               m_id: '03',
-               m_flag: 0,
-               m_s_id: "10001",
-               m_r_id: "10001",
-               m_time: '2020-08-25 15:18:08',
-               m_content: '谈笑有鸿儒，往来无白丁。可以调素琴，阅金经。'
-             },
-             {
-               m_id: '04',
-               m_flag: 1,
-               m_s_id: "10001",
-               m_r_id: "10001",
-               m_time: '2019-08-25 15:18:08',
-               m_content: '无丝竹之乱耳，无案牍之劳形。南阳诸葛庐，西蜀子云亭。孔子云：何陋之有？'
-             }
-           ]
-         }, */
-        // {
-        //   index: 1,
-        //   id: '10002',
-        //   avatar: require('../../assets/img/avatar/avatar01.png'),
-        //   name: '余三胖',
-        //   // 聊天内容
-        //   communities: [
-        //     {
-        //       m_id: '01',
-        //       m_flag: 0,
-        //       m_s_id: "10001",
-        //       m_r_id: "10001",
-        //       m_time: '2021-03-05 15:10:07',
-        //       m_content: '寒蝉凄切，对长亭晚，骤雨初歇。'
-        //     },
-        //     {
-        //       m_id: '02',
-        //       m_flag: 1,
-        //       m_s_id: "10001",
-        //       m_r_id: "10001",
-        //       m_time: '2021-03-05 15:10:08',
-        //       m_content: '都门帐饮无绪，留恋处，兰舟催发。'
-        //     },
-        //     {
-        //       m_id: '03',
-        //       m_flag: 0,
-        //       m_s_id: "10001",
-        //       m_r_id: "10001",
-        //       m_time: '2021-03-05 15:10:09',
-        //       m_content: '执手相看泪眼，竟无语凝噎。'
-        //     },
-        //     {
-        //       m_id: '04',
-        //       m_flag: 1,
-        //       m_s_id: "10001",
-        //       m_r_id: "10001",
-        //       m_time: '2021-03-05 15:10:10',
-        //       m_content: '念去去，千里烟波，暮霭沉沉楚天阔。'
-        //     },
-        //     {
-        //       m_id: '05',
-        //       m_flag: 0,
-        //       m_s_id: "10001",
-        //       m_r_id: "10001",
-        //       m_time: '2021-03-05 15:11:10',
-        //       m_content: '多情自古伤离别，更那堪，冷落清秋节！'
-        //     },
-        //     {
-        //       m_id: '06',
-        //       m_flag: 1,
-        //       m_s_id: "10001",
-        //       m_r_id: "10001",
-        //       m_time: '2021-03-05 15:11:11',
-        //       m_content: '今宵酒醒何处？杨柳岸，晓风残月。'
-        //     },
-        //     {
-        //       m_id: '07',
-        //       m_flag: 0,
-        //       m_s_id: "10001",
-        //       m_r_id: "10001",
-        //       m_time: '2021-03-05 15:13:21',
-        //       m_content: '此去经年，应是良辰好景虚设。'
-        //     },
-        //     {
-        //       m_id: '08',
-        //       m_flag: 1,
-        //       m_s_id: "10001",
-        //       m_r_id: "10001",
-        //       m_time: '2021-03-05 15:13:22',
-        //       m_content: '便纵有千种风情，更与何人说？'
-        //     }
-        //   ]
-        // },
-      ]
+      ],
+      userList: [
+      ],
+      pageNow: 0, // 当前页码
+      pageSize: 5,    // 每页显示条数
+      size: 5,
+      total: 0,
     }
   },
+  computed: {
+    // // 计算当前页的用户列表
+    // paginatedUserList() {
+    //   const start = (this.pageNow - 1) * this.pageSize;
+    //   const end = start + this.pageSize;
+    //   return this.userList.slice(start, end);
+    // }
+  },
   created() {
-    console.log("创建组件");
-    console.log("r_id=" + localStorage.getItem('r_id'));
-    console.log("c_id=" + localStorage.getItem('c_id'));
+    this.fetchUserList()
+    // console.log("r_id=" + localStorage.getItem('r_id'));
+    // console.log("c_id=" + localStorage.getItem('c_id'));
     this.fetchMessages()
   },
   methods: {
+    // 当每页条数改变时的处理函数
+    findSizeChange(size) {
+      console.log("当每页条数改变时" + size);
+      this.size = size;
+      this.findAll()
+    },
+    // 当页码改变时的处理函数
+    findPage() {
+      console.log(this.pageNow)
+      this.findAll(this.pageNow, this.size)
+    },
+    // 获取数据的函数
+    findAll(page, size) {
+      var that = this
+      this.$http.get('http://localhost:8085/hire/hire_attract/' + localStorage.getItem("r_id"), {
+        params: {
+          pageNow: this.pageNow,
+          pageSize: this.size
+        }
+      })
+        .then(function (response) {
+          that.userList = []
+          console.log(response.data.list.length)
+          for (var len = (that.pageNow - 1) * that.size; len < that.pageNow * that.size; len++) {
+            console.log("len=" + len);
+            console.log("ccc=" + that.pageNow * that.size);
+            if (len >= response.data.list.length) {
+              break;
+            }
+            // 将获取到的数据格式化后存入table_data
+            that.userList[len] = response.data.list[len];
+            that.userList[len].created_time = that.userList[len].created_time.substring(0, 10)
+            console.log(that.userList[len].created_time)
+          }
+          // 设置总条数
+          that.total = response.data.total
+
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    fetchUserList() {
+      this.userList = []
+      console.log("创建组件");
+      const _this = this
+      this.$http.get('http://localhost:8085/hire/hire_attract/' + localStorage.getItem("r_id"), {
+        params: {
+          pageNow: 1,
+          pageSize: 5
+        }
+      })
+        .then(function (response) {
+          for (var len = 0; len <= 4; len++) {
+            if (len >= response.data.list.length) {
+              break;
+            }
+            // 将获取到的数据格式化后存入table_data
+            _this.userList.push(response.data.list[len])
+            console.log("--" + response.data.list[len]);
+            _this.userList[len].created_time = _this.userList[len].created_time.substring(0, 10)
+            console.log(_this.userList[len].created_time)
+          }
+          // 设置总条数
+          _this.total = response.data.total
+        })
+        .catch(function (error) {
+          console.log(error)
+        });
+
+    },
     formatCurrentTime() {
       const now = new Date();
       const year = now.getFullYear();
@@ -275,14 +290,24 @@ export default {
     },
     // 获取子组件传来的值
     getFromChild(index) {
-      
+
       this.connect_index = index
       console.log("子组件传来的值：" + this.connect_index);
 
     },
+    // 选择用户
+    selectUser(user) {
+      console.log("选择了用户：", user);
+      this.userListVisible = false; // 关闭弹窗
+      // 可以在这里处理选中用户的逻辑，比如添加到聊天框
+      const message = "我们可以聊天了，" + user.candidate.user.name
+      this.sendMessage(message, user.apply_id.toString())
+      this.fetchMessages()
+
+    },
     async sendMessage(message, c_id) {
       try {
-        const response = await this.$http.post('http://localhost:8085/message/send', {
+        const response = await this.$http.post('http://localhost:8085/message/sendHr', {
           data: {
             u_id: c_id,                    // 接收方用户id
             p_id: localStorage.getItem('r_id'),  // 发送方(HR)id
@@ -305,10 +330,12 @@ export default {
             targetGroup.communities.push(newMessage);
 
             // 通知子组件更新排序
-            this.$refs.chatContent.getNew(targetGroup.communities);
-            this.$refs.chatContent.scrollToBottom();
+            // this.$refs.chatContent.getNew(targetGroup.communities);
+            // this.$refs.chatContent.scrollToBottom();
             this.fetchMessages();
-            
+            // 刷新页面
+            this.$router.go(0);
+
           }
         }
       } catch (error) {

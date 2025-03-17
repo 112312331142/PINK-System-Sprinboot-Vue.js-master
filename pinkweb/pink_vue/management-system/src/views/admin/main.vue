@@ -9,7 +9,7 @@
             </el-col>
             <el-col :span="19">
               <ul>
-                <li class="main-title">PINK-panel</li>
+                <li class="main-title">ZPT-panel</li>
               </ul>
             </el-col>
           </el-row>

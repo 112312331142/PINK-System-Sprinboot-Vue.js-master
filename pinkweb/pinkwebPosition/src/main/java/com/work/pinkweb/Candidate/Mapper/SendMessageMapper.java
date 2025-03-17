@@ -29,6 +29,11 @@ public interface SendMessageMapper {
     @Select("select name from user where id=#{id}")
     String getNameById(Integer id);
 
-    @Insert("insert into message(c_id,r_id,m_content,m_time,flag) values(#{cId},#{rId},#{message},#{now},#{flag})")
+    @Insert("insert into message(c_id,r_id,m_content,m_time,flag) " +
+            "values(#{cId},#{rId},#{message},#{now},#{flag})")
     void sendMessageHr(String cId, String rId, String message, LocalDateTime now, Integer flag);
+
+    // 根据apply_id得出u_id
+    @Select("select u_id from apply where apply_id=#{applyId}")
+    String getUIdByApplyId(String applyId);
 }

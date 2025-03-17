@@ -143,7 +143,7 @@ export default {
   data() {
     return {
       //每页显示的条数
-      size: 8,
+      size: 4,
       //总条数
       total: 0,
       pageNow: 1,
@@ -289,18 +289,19 @@ export default {
     },
   },
   created() {
+    // const size = 4;
     const _this = this
     this.$http.get('http://localhost:8085/hire/hire_release/' + localStorage.getItem("r_id"), {
       params: {
         pageNow: 1,
-        pageSize: 4
+        pageSize: this.size
       }
     })
       .then(function (response) {
         console.log(response)
         // _this.ehrid=response.data.list[0].ehrid;
         // console.log( _this.ehrid);
-        for (var len = 0; len < 4; len++) {
+        for (var len = 0; len < response.data.list.length; len++) {
 
           _this.table_data.push(response.data.list[len]);
           _this.table_data[len].created_time = _this.table_data[len].created_time.substring(0, 10);

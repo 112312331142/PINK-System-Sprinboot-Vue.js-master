@@ -15,4 +15,5 @@ public interface SendMessageService {
 
     void sendMessageHr(String cId, String rId, String message,Integer flag);
 
+    String getUIdByApplyId(String applyId);
 }

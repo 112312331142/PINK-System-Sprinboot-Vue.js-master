@@ -31,8 +31,9 @@
       <div class="bottom-body">
         <el-row>
           <resume-box v-for="(list, index) in modelList" :key="list.m_id">
-            <img :src="list.m_img" alt="Resume-Model" class="resume-img" slot="resume-img" @mouseover="mouseOver(index)" @mouseout="mouseOut(index)" @click="turnMake(list)">
-            <span slot="resume-name">{{list.m_title}}</span>
+            <img :src="list.m_img" alt="Resume-Model" class="resume-img" slot="resume-img" @mouseover="mouseOver(index)"
+              @mouseout="mouseOut(index)" @click="turnMake(list)">
+            <span slot="resume-name">{{ list.m_title }}</span>
           </resume-box>
         </el-row>
       </div>
@@ -44,10 +45,10 @@
 // 导入ResumeItem模块
 import ResumeItem from "../../components/apply-system/resume/ResumeItem";
 // 导入ResumeBox模块
-import ResumeBox from "../../components/apply-system/resume/ResumeBox";
+import ResumeBox from "../../components/apply-system/resume/ResumeBox.vue";
 export default {
   name: "resume",
-  components: {ResumeBox, ResumeItem},
+  components: { ResumeBox, ResumeItem },
   data() {
     return {
       resumes: [],
@@ -75,14 +76,14 @@ export default {
   },
   created() {
     const v = this
-    this.$http.get('http://localhost:8085/index/apply_edit/getallresume/'+localStorage.getItem('c_id'))
+    this.$http.get('http://localhost:8085/index/apply_edit/getallresume/' + localStorage.getItem('c_id'))
       .then(function (response) {
-      console.log(response)
-      for(var len = 0;len<response.data.length;len++){
+        console.log(response)
+        for (var len = 0; len < response.data.length; len++) {
           response.data[len].flag = 0
           v.resumes.push(response.data[len])
         }
-      
+
       })
       .catch(function (error) {
         console.log(error);
@@ -99,17 +100,17 @@ export default {
       dom[index].style.opacity = 1
     },
     turnMake(list) {
-    this.$http.get('http://localhost:8085/index/apply_resume/'+list.m_id,{
-      params:{
-          phone : localStorage.getItem('phone')
+      this.$http.get('http://localhost:8085/index/apply_resume/' + list.m_id, {
+        params: {
+          phone: localStorage.getItem('phone')
         },
-    })
-    .then(function (response) {
-            location.reload();
       })
-    .catch(function (error) {
-      console.log(error);
-    });
+        .then(function (response) {
+          location.reload();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
       this.$router.push({
         path: '/index/apply_export',
         query: {

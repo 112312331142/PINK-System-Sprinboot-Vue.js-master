@@ -6,7 +6,7 @@
       </el-col>
       <el-col :span="15" class="greet-panel">
         <h2>{{greet}}, Admin！</h2>
-        <p>Welcome to <strong>PINK</strong>-panel.</p>
+        <p>Welcome to <strong>智聘通</strong>-panel.</p>
       </el-col>
       <el-col :span="7">
         <div class="feature-btn">

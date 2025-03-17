@@ -18,10 +18,12 @@
           <el-button type="success" class="communicate-btn" @click="submitApplication()">投递申请</el-button>
         </div>
       </el-col>
+
       <el-dialog title="选择简历" :visible.sync="resumeVisible">
         <div class="top-body">
           <resume-item v-for="resume in resumes" :key="resume.index" :resume="resume"></resume-item>
         </div>
+
       </el-dialog>
       <el-dialog :title="position.contact" :visible.sync="dialogFormVisible">
         <el-row>
@@ -225,6 +227,7 @@ import CommunicateLi from "../../../components/apply-system/communicate/Communic
 // 导入PostApp组件
 import PostApp from "../../../components/apply-system/post/PostApp";
 import ResumeItem from "../../../components/apply-system/resume/ResumeItem";
+import { Message } from 'element-ui';
 export default {
   name: "position-detail",
   components: { PostApp, CommunicateLi, ResumeItem },
@@ -323,7 +326,7 @@ export default {
           for (var len = 0; len < response.data.length; len++) {
             const newChat = {
               index: _this.chats.length + 1,
-              type: '已发送',
+              type: '---',
               content: response.data[len]
             };
             // 将新消息添加到 chats 数组
@@ -344,7 +347,7 @@ export default {
       // 创建新的消息对象
       const newChat = {
         index: this.chats.length + 1,
-        type: '已发送',
+        type: '---',
         content: this.communication.text
       };
 
@@ -372,7 +375,8 @@ export default {
         })
         .catch(function (error) {
           console.log(error);
-          alert('发送消息失败，请重试');
+          // alert('发送消息失败，请重试');
+          Message.warning("发送消息失败，请重试")
         });
     },
     jumpCompany() {
@@ -385,35 +389,50 @@ export default {
       })
     },
     submitApplication() {
+      // 保存当前组件实例到变量v，以便在回调函数中访问
       const v = this
+
+      // 发送POST请求以判断用户是否已经投递了指定岗位
       this.$http.post('http://localhost:8085/index/apply_resume/judge', {
         data: {
+          // 从localStorage获取用户ID和岗位ID
           u_id: localStorage.getItem('c_id'),
           p_id: localStorage.getItem('r_id'),
         }
       })
         .then(function (response) {
+          // 处理响应数据
           console.log(response)
           if (response.data + '' === "已经投递该岗位") {
-            alert("已经投递了该岗位，请等待消息")
+            // 如果已经投递，则显示警告信息
+            Message.warning("已经投递了该岗位，请等待消息")
           } else {
+            // 保存当前上下文到变量y，以便在嵌套请求的回调中使用
             const y = v
+            // 设置简历可见性为true，初始化简历列表
             v.resumeVisible = true
             v.resumes = []
-            v.$http.get('http://localhost:8085/index/apply_edit/getallresume/' + localStorage.getItem('c_id'))
+            // 发送GET请求获取用户的所有简历
+            v.$http.get('http://localhost:8085/index/apply_edit/getallresume/' +
+              localStorage.getItem('c_id'))
               .then(function (response) {
+                // 处理获取简历的响应数据
                 console.log(response)
                 for (var len = 0; len < response.data.length; len++) {
+                  // 为每个简历添加一个flag属性，并设置为1
                   response.data[len].flag = 1
+                  // 将简历添加到简历列表中
                   y.resumes.push(response.data[len])
                 }
               })
               .catch(function (error) {
+                // 处理获取简历时的错误
                 console.log(error);
               });
           }
         })
         .catch(function (error) {
+          // 处理初始POST请求的错误
           console.log(error);
         });
 

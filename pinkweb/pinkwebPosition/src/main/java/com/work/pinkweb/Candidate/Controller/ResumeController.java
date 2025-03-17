@@ -21,7 +21,8 @@ public class ResumeController {
 
     //上传简历pdf
     @PostMapping("/index/apply_edit/uploadResumePDF")
-    public String uploadResumePDF(@RequestParam("file") MultipartFile file, @RequestParam(value = "c_id") Integer c_id) throws IOException {
+    public String uploadResumePDF(@RequestParam("file") MultipartFile file,
+                                  @RequestParam(value = "c_id") Integer c_id) throws IOException {
         SimpleDateFormat df = new SimpleDateFormat("ss");//设置日期格式
 
         String fileName = df.format(new Date()) + file.getOriginalFilename();

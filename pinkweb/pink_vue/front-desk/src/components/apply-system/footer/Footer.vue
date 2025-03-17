@@ -2,14 +2,14 @@
   <footer class="footer">
     <el-col :span="8">
       <div class="footer-content footer-left">
-        <div class="copyright footer-title">Copyright © 2021 Pink</div>
+        <div class="copyright footer-title">Copyright © 2025 ZPT</div>
       </div>
     </el-col>
     <el-col :span="8">
       <div class="footer-content footer-left">
         <div class="bold footer-title">Contract</div>
-        <div class="middle">Huazhong University of Science and Technology</div>
-        <div class="middle">M202076625@hust.edu.cn</div>
+        <div class="middle">Wuhan Institute of Technology</div>
+        <div class="middle">8213131@wuhan.edu.cn</div>
       </div>
     </el-col>
     <el-col :span="8">
@@ -63,6 +63,17 @@
                   </div>
                 </el-col>
               </el-row>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <h1 class="ai-title">AI聊天助手</h1>
+            <div class="right-content" >
+              <!-- 写图形 -->
+               <img src="../../../assets/img/background/880.jpg" width="240px" height="350px">
+               <!-- <img src="../../../assets/img/bakcground/bg.jpeg"  class="qr-code"> -->
+              <!-- <div class="top-tip">使用微信APP</div>
+              <div class="bottom-tip">沟通更便利!</div>
+              <div class="bottom-tip">微信扫码使用</div> -->
             </div>
           </el-col>
         </el-row>

@@ -10,7 +10,7 @@
         <div class="right-content">
           <div class="title">
             <span class="left-title">Log in</span>
-            <span class="right-title blue">'PINK'</span>
+            <span class="right-title blue">'智聘通'</span>
           </div>
           <div class="form">
             <el-form ref="form" :model="form" label-width="80px">

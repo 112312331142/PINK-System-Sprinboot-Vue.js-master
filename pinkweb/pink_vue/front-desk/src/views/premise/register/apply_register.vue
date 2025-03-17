@@ -11,7 +11,7 @@
           <div class="form1" v-if="pageActive === 1">
             <div class="title">
               <span class="left-title">Sign up</span>
-              <span class="right-title green">'PINK'</span>
+              <span class="right-title green">'智聘通'</span>
             </div>
             <div class="form">
               <el-form ref="form" :model="signup" label-width="80px">

@@ -10,11 +10,11 @@
           <el-row>
             <el-col :span="24">
               <!-- 搜索框（当前被注释掉） -->
-              <!-- <div>
+              <div>
                 <el-input placeholder="搜索职位，公司" v-model="research" class="input-with-select">
                   <el-button slot="append" icon="el-icon-search"></el-button>
                 </el-input>
-              </div> -->
+              </div>
               <!-- 推荐内容区域 -->
               <div class="recommend-content">
                 <div class="recommend-title">
@@ -203,7 +203,7 @@
 
 <script>
 import PostItem from "../../components/apply-system/post/PostItem";
-import AnnexPanel from "../../components/apply-system/profile/AnnexPanel";
+import AnnexPanel from "../../components/apply-system/profile/AnnexPanel.vue";
 export default {
   name: "profile",
   components: { AnnexPanel, PostItem },
@@ -228,6 +228,12 @@ export default {
         avatar: ""
       },
       avatarUrl: "",
+      payInfo: {
+        outTradeNo: "1",
+        subject: "1",
+        totalAmount: "1",
+        description: "1"
+      }
     }
   },
   created() {
@@ -282,6 +288,30 @@ export default {
         type: 'success'
       });
       // 可以在这里添加购买逻辑，如调用支付接口等
+      this.$http
+        .post(
+          // 也可以设置为自己的主机名加端口号
+          "http://ek7hhz.natappfree.cc/order/alipay?outTradeNo=" +
+          this.payInfo.outTradeNo +
+          "&subject=" +
+          this.payInfo.subject +
+          "&totalAmount=" +
+          this.payInfo.totalAmount +
+          "&description=" +
+          this.payInfo.description
+        )
+        .then((resp) => {
+          // 添加之前先删除一下，如果单页面，页面不刷新，添加进去的内容会一直保留在页面中，二次调用form表单会出错
+          const divForm = document.getElementsByTagName("div");
+          if (divForm.length) {
+            document.body.removeChild(divForm[0]);
+          }
+          const div = document.createElement("div");
+          div.innerHTML = resp.data; // data就是接口返回的form 表单字符串
+          document.body.appendChild(div);
+          document.forms[0].setAttribute("target", "_blank"); // 新开窗口跳转
+          document.forms[0].submit();
+        });
     },
     // 编辑个人信息
     editInfo() {

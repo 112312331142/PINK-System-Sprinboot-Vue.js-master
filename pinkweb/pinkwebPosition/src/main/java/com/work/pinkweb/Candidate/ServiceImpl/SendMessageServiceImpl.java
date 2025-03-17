@@ -19,6 +19,7 @@ public class SendMessageServiceImpl implements SendMessageService {
     @Override
     public void sendMessage(String cId, String rId, String message, Integer flag) {
         Integer ehrIdByRId = sendMessageMapper.getEhrIdByRId(Integer.parseInt(rId));
+        System.out.println(ehrIdByRId);
         sendMessageMapper.sendMessage(String.valueOf(cId), String.valueOf(ehrIdByRId), message, LocalDateTime.now(), flag);
     }
 
@@ -41,5 +42,10 @@ public class SendMessageServiceImpl implements SendMessageService {
     @Override
     public void sendMessageHr(String cId, String rId, String message, Integer flag) {
         sendMessageMapper.sendMessageHr(String.valueOf(cId), String.valueOf(rId), message, LocalDateTime.now(), flag);
+    }
+
+    @Override
+    public String getUIdByApplyId(String applyId) {
+        return sendMessageMapper.getUIdByApplyId(applyId);
     }
 }

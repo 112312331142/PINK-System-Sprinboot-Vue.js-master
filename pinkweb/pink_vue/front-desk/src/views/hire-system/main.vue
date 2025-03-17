@@ -4,7 +4,7 @@
       <div class="left-content height-all">
         <div class="logo-col">
           <img src="../../assets/img/logo/logo_03.png" alt="logo" class="logo">
-          <span class="logo-title">PINK</span>
+          <span class="logo-title">智聘通</span>
         </div>
         <div class="feature-col">
           <ul>
