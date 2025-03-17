@@ -281,12 +281,6 @@ export default {
   },
   methods: {
     purchaseMembership(type) {
-      // 调用后端接口进行购买逻辑
-      this.$message({
-        showClose: true,
-        message: '购买成功',
-        type: 'success'
-      });
       // 可以在这里添加购买逻辑，如调用支付接口等
       this.$http
         .post(
@@ -295,7 +289,7 @@ export default {
           this.payInfo.outTradeNo +
           "&subject=" +
           this.payInfo.subject +
-          "&totalAmount=" +
+          "&totalAmount=" +  
           this.payInfo.totalAmount +
           "&description=" +
           this.payInfo.description
@@ -312,6 +306,12 @@ export default {
           document.forms[0].setAttribute("target", "_blank"); // 新开窗口跳转
           document.forms[0].submit();
         });
+      // 调用后端接口进行购买逻辑
+      this.$message({
+        showClose: true,
+        message: '购买成功',
+        type: 'success'
+      });
     },
     // 编辑个人信息
     editInfo() {
