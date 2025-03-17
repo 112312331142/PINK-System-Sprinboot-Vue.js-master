@@ -31,6 +31,7 @@ public class PayController {
     @PostMapping(value = "/order/alipay")
     public String alipay(String outTradeNo, String subject,
                          String totalAmount, String description) throws AlipayApiException {
+        // 获取response
         Order order = new Order();
         order.setOut_trade_no(outTradeNo);
         order.setSubject(subject);
