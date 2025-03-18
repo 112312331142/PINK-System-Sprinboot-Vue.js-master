@@ -57,6 +57,7 @@
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="addFavorite(detail[0].user.id)">感兴趣</el-button>
             <el-button type="primary" @click="detailVisible = false">关 闭</el-button>
           </div>
         </el-dialog>
@@ -125,6 +126,19 @@ export default {
       })
   },
   methods: {
+    // 新增“感兴趣”方法
+    addFavorite(userId) {
+      var that = this;
+      this.$http.post('http://localhost:8085/admin/manage_user/favorite/' + userId)
+        .then(function (response) {
+          that.$message.success('感兴趣成功'); // 成功提示
+          // 如果需要刷新用户详情数据，可以在这里调用相关方法
+        })
+        .catch(function (error) {
+          that.$message.error('感兴趣失败'); // 失败提示
+          console.log(error);
+        });
+    },
     searchHandler() {
       this.$router.push({
         path: '/admin/manage_user',
@@ -191,6 +205,14 @@ export default {
       this.$http.get('http://localhost:8085/index/apply_edit/' + row.id)
         .then(function (response) {
           that.detail.push(response.data)
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      // 增加“看过我”次数
+      this.$http.post('http://localhost:8085/admin/manage_user/view/' + row.id)
+        .then(function (response) {
+          console.log(response);
         })
         .catch(function (error) {
           console.log(error);

@@ -68,4 +68,19 @@ public interface ManageMapper {
     @Select("SELECT count(*) FROM enterprise_info WHERE TO_DAYS( NOW( ) ) - TO_DAYS( created_time) < #{i} && " +
             "TO_DAYS( NOW( ) ) - TO_DAYS( created_time) >= (#{i}-1)")
     Integer companyChange(Integer i);
+
+    // 增加“看过我”次数
+    @Update("UPDATE user SET viewed_count = viewed_count + 1 WHERE id = #{user_id}")
+    void increaseViewCount(Integer user_id);
+
+    // 增加“感兴趣”次数
+    @Update("UPDATE user SET favorite_count = favorite_count + 1 WHERE id = #{user_id}")
+    void addFavorite(Integer user_id);
+    // 查询“看过我”次数
+    @Select("SELECT viewed_count FROM user WHERE id = #{user_id}")
+    int getViewedCount(Integer user_id);
+
+    // 查询“对我感兴趣”次数
+    @Select("SELECT favorite_count FROM user WHERE id = #{user_id}")
+    int getInterestedCount(Integer user_id);
 }

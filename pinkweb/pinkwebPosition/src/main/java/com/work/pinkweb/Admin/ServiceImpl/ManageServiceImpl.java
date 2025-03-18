@@ -130,4 +130,25 @@ public class ManageServiceImpl implements ManageService {
         System.out.println(li);
         return li;
     }
+
+    @Override
+    public String increaseViewCount(Integer user_id) {
+        manageMapper.increaseViewCount(user_id);
+        return "查看成功";
+    }
+
+    @Override
+    public String addFavorite(Integer user_id) {
+        manageMapper.addFavorite(user_id);
+        return "感兴趣成功";
+    }
+    @Override
+    public int getViewedCount(Integer user_id) {
+        return manageMapper.getViewedCount(user_id);
+    }
+
+    @Override
+    public int getInterestedCount(Integer user_id) {
+        return manageMapper.getInterestedCount(user_id);
+    }
 }

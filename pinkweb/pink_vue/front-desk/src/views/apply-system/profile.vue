@@ -187,11 +187,11 @@
           <!-- 历史记录面板 -->
           <div class="history-panel">
             <el-button plain class="history-btn">
-              <li class="big-num">0</li>
+              <li class="big-num">{{ interestedCount }}</li>
               <li>对我感兴趣</li>
             </el-button>
             <el-button plain class="history-btn">
-              <li class="big-num">0</li>
+              <li class="big-num">{{ viewedCount }}</li>
               <li>看过我</li>
             </el-button>
           </div>
@@ -233,10 +233,13 @@ export default {
         subject: "1",
         totalAmount: "1",
         description: "1"
-      }
+      },
+      interestedCount: 0, // 对我感兴趣计数
+      viewedCount: 0      // 看过我计数
     }
   },
   created() {
+    this.fetchInterestStats()
     const v = this
     // 获取用户信息
     this.$http.get('http://localhost:8085/index/apply_edit/' + localStorage.getItem('c_id'))
@@ -280,6 +283,21 @@ export default {
       });
   },
   methods: {
+    fetchInterestStats() {
+      const v = this;
+      this.$http.post('http://localhost:8085/getInterestStats', {
+        user_id: localStorage.getItem('c_id')
+      })
+        .then(function (response) {
+          v.interestedCount = response.data.interestedCount;
+          v.viewedCount = response.data.viewedCount;
+          console.log("interested:" + v.interestedCount);
+          console.log("viewed:" + v.viewedCount);
+        })
+        .catch(function (error) {
+          console.log("error:" + error);
+        })
+    },
     purchaseMembership(type) {
       // 可以在这里添加购买逻辑，如调用支付接口等
       this.$http
@@ -289,7 +307,7 @@ export default {
           this.payInfo.outTradeNo +
           "&subject=" +
           this.payInfo.subject +
-          "&totalAmount=" +  
+          "&totalAmount=" +
           this.payInfo.totalAmount +
           "&description=" +
           this.payInfo.description

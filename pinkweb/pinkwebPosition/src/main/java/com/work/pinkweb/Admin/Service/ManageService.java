@@ -32,4 +32,12 @@ public interface ManageService {
     List userChange();
 
     List companyChange();
+
+    String increaseViewCount(Integer user_id);
+
+    String addFavorite(Integer user_id);
+
+    int getViewedCount(Integer user_id);
+
+    int getInterestedCount(Integer user_id);
 }

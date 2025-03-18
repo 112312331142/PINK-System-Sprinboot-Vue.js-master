@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -106,5 +107,31 @@ public class ManageController {
     @RequestMapping("/admin/admin_home/companyChange")
     public List companyChange() {
         return manageService.companyChange();
+    }
+
+    // 管理员查看用户详情，增加“看过我”次数
+    // 管理员查看用户详情，增加“看过我”次数
+    @PostMapping("/admin/manage_user/view/{user_id}")
+    public String increaseViewCount(@PathVariable Integer user_id) {
+        return manageService.increaseViewCount(user_id);
+    }
+
+    // 管理员标记用户为感兴趣，增加“感兴趣”次数
+    @PostMapping("/admin/manage_user/favorite/{user_id}")
+    public String addFavorite(@PathVariable Integer user_id) {
+        String result = manageService.addFavorite(user_id);
+        int interestedCount = manageService.getInterestedCount(user_id);
+        return interestedCount + "";
+    }
+    // 新增接口：获取指定用户的“对我感兴趣”和“看过我”的数据
+    @PostMapping("/getInterestStats")
+    public Map<String, Integer> getInterestStats(@RequestBody Map<String, Integer> request) {
+        Integer user_id = request.get("user_id");
+        Map<String, Integer> stats = new HashMap<>();
+        int viewedCount = manageService.getViewedCount(user_id);
+        int interestedCount = manageService.getInterestedCount(user_id);
+        stats.put("viewedCount", viewedCount);
+        stats.put("interestedCount", interestedCount);
+        return stats;
     }
 }
