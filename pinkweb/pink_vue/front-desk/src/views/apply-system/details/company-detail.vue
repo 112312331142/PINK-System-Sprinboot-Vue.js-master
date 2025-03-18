@@ -5,10 +5,10 @@
       <el-col :span="15">
         <div class="header-content">
           <!-- <img :src="company.logo" alt="logo" class="company-logo"> -->
-          <img :src="'http://localhost:8085/companyAvatar/'+company[0].e_logo" alt="" class="company-logo">
+          <img :src="'http://localhost:8085/companyAvatar/' + company[0].e_logo" alt="" class="company-logo">
           <div class="c-info">
-            <h2>{{company[0].e_name}}</h2>
-            <p>{{company[0].e_operationstatus}} · {{company[0].e_size}}人以上</p>
+            <h2>{{ company[0].e_name }}</h2>
+            <p>{{ company[0].e_operationstatus }} · {{ company[0].e_size }}人以上</p>
           </div>
         </div>
       </el-col>
@@ -18,13 +18,13 @@
             <el-row class="p-info-top">
               <el-col :span="18">
                 <div class="grid-content">
-                  <h2>{{company[0].companyHrList[0].ehr_currentaccount}}</h2>
+                  <h2>{{ company[0].companyHrList[0].ehr_currentaccount }}</h2>
                   <p>在招岗位</p>
                 </div>
               </el-col>
               <el-col :span="6">
                 <div class="grid-content">
-                  <h2>{{company[0].companyHrList[0].hr_account}}</h2>
+                  <h2>{{ company[0].companyHrList[0].hr_account }}</h2>
                   <p>位HR</p>
                 </div>
               </el-col>
@@ -44,33 +44,39 @@
       <el-col :span="17">
         <div class="left-content">
           <div class="c-intro">
-            <h3>{{company[0].e_name}}简介</h3>
-            <p class="c-intro-main">{{company[0].e_introduction}}</p>
+            <h3>{{ company[0].e_name }}简介</h3>
+            <p class="c-intro-main">{{ company[0].e_introduction }}</p>
           </div>
           <div class="c-business">
             <h3>工商信息</h3>
             <el-collapse accordion class="collapse">
               <el-collapse-item title="法人 Corporate" name="1">
-                <div>{{company[0].e_legalrepresentative}}</div>
+                <div>{{ company[0].e_legalrepresentative }}</div>
               </el-collapse-item>
               <el-collapse-item title="企业类型 Type" name="2">
-                <div>{{company[0].e_type}}</div>
+                <div>{{ company[0].e_type }}</div>
               </el-collapse-item>
               <el-collapse-item title="经营状态 State" name="3">
-                <div>{{company[0].e_operationstatus}}</div>
+                <div>{{ company[0].e_operationstatus }}</div>
               </el-collapse-item>
               <el-collapse-item title="注册地址 Address" name="4">
-                <div>{{company[0].e_registeredaddress}}</div>
+                <div>{{ company[0].e_registeredaddress }}</div>
               </el-collapse-item>
               <el-collapse-item title="经营范围 Range" name="5">
-                <div>{{company[0].e_businessscope}}</div>
+                <div>{{ company[0].e_businessscope }}</div>
               </el-collapse-item>
             </el-collapse>
           </div>
           <div class="c-position">
             <h3>在招岗位</h3>
             <el-row class="p-items">
-              <post-item-simple v-for="(post, index) in posts" :key="post.index" :post="post" :index="index"></post-item-simple>
+              <post-item-simple v-for="(post, index) in posts" :key="post.index" :post="post"
+                :index="index"></post-item-simple>
+            </el-row>
+
+            <h3>工作地址</h3>
+            <el-row class="p-items">
+              <baidu-map class="baidu-map" :center=mapCenter :zoom="15" style="width: 100%; height: 300px;"></baidu-map>
             </el-row>
           </div>
         </div>
@@ -87,14 +93,14 @@
               </el-col>
               <el-col :span="18">
                 <div class="boss-info-content">
-                  <div class="boss-name">{{company[0].e_executive}}</div>
-                  <div class="boss-job">{{company[0].e_position}}</div>
+                  <div class="boss-name">{{ company[0].e_executive }}</div>
+                  <div class="boss-job">{{ company[0].e_position }}</div>
                 </div>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="24" class="boss-info">
-                {{company[0].e_executive_intro}}
+                {{ company[0].e_executive_intro }}
               </el-col>
             </el-row>
           </div>
@@ -119,7 +125,7 @@
         </div>
         <div class="right-content">
           <div class="c-intro">
-            <h3>{{company[0].e_name}}招聘HR</h3>
+            <h3>{{ company[0].e_name }}招聘HR</h3>
           </div>
           <hr-item v-for="hr in hrs" :key="hr.index" :hr="hr"></hr-item>
         </div>
@@ -140,22 +146,25 @@
 import PostItemSimple from "../../../components/apply-system/post/PostItemSimple";
 // 导入HrItem组件
 import HrItem from "../../../components/apply-system/hr/HrItem";
+
 export default {
   name: "company-detail",
-  components: {HrItem, PostItemSimple},
+  components: { HrItem, PostItemSimple },
   data() {
     return {
       company: [],
       hrs: [],
       hrs_tmp: [],
-      posts : [],
-      company_detail_tmp: []
+      posts: [],
+      company_detail_tmp: [],
+      mapCenter: { lng: 116.404, lat: 39.915 }  //新增字段存储公司地址
     }
   },
-    created() {
+  created() {
+    // this.initMap()
     this.e_id = this.$route.query.e_id;
     const _this = this
-    this.$http.get('http://localhost:8085/index/company_detail/'+this.e_id)
+    this.$http.get('http://localhost:8085/index/company_detail/' + this.e_id)
       .then(function (response) {
         _this.company.push(response.data)
         // console.log(response)
@@ -166,25 +175,22 @@ export default {
 
     this.e_id = this.$route.query.e_id;
     const __this = _this
-    this.$http.get('http://localhost:8085/index/company_detail/joblist/'+this.e_id)
+    this.$http.get('http://localhost:8085/index/company_detail/joblist/' + this.e_id)
       .then(function (response) {
         console.log(response)
-       __this.company_detail_tmp.push(response.data)
+        __this.company_detail_tmp.push(response.data)
         var count = 0
-       for(let i = 0;i<__this.company_detail_tmp.length;i++)
-       {
+        for (let i = 0; i < __this.company_detail_tmp.length; i++) {
 
-        for(let j = 0;j<__this.company_detail_tmp[i].companyHrList.length;j++)
-        {
+          for (let j = 0; j < __this.company_detail_tmp[i].companyHrList.length; j++) {
 
-          for(let k = 0;k<__this.company_detail_tmp[i].companyHrList[j].recruitmentList.length;k++)
-          {
-          __this.company_detail_tmp[i].companyHrList[j].recruitmentList[k].name = __this.company_detail_tmp[i].companyHrList[j].user.name
-          __this.company_detail_tmp[i].companyHrList[j].recruitmentList[k].ehr_position = __this.company_detail_tmp[i].companyHrList[j].ehr_position
-          __this.posts.push(__this.company_detail_tmp[i].companyHrList[j].recruitmentList[k])
+            for (let k = 0; k < __this.company_detail_tmp[i].companyHrList[j].recruitmentList.length; k++) {
+              __this.company_detail_tmp[i].companyHrList[j].recruitmentList[k].name = __this.company_detail_tmp[i].companyHrList[j].user.name
+              __this.company_detail_tmp[i].companyHrList[j].recruitmentList[k].ehr_position = __this.company_detail_tmp[i].companyHrList[j].ehr_position
+              __this.posts.push(__this.company_detail_tmp[i].companyHrList[j].recruitmentList[k])
+            }
           }
         }
-       }
       })
       .catch(function (error) {
         console.log(error);
@@ -192,23 +198,38 @@ export default {
 
 
     this.e_id = this.$route.query.e_id;
-    this.$http.get('http://localhost:8085/index/company_detail/hrlist/'+this.e_id)
+    this.$http.get('http://localhost:8085/index/company_detail/hrlist/' + this.e_id)
       .then(function (response) {
 
 
         __this.hrs_tmp.push(response.data)
 
-       for(let i = 0;i<__this.hrs_tmp[0].length;i++)
-       {
+        for (let i = 0; i < __this.hrs_tmp[0].length; i++) {
           __this.hrs_tmp[0][i].e_name = __this.hrs_tmp[0][i].company.e_name
           __this.hrs_tmp[0][i].name = __this.hrs_tmp[0][i].user.name
           __this.hrs.push(__this.hrs_tmp[0][i])
-       }
+        }
       })
       .catch(function (error) {
         console.log(error);
       });
   },
+  mounted() {
+    this.initMap();
+  },
+  methods: {
+    initMap() {
+      //确保 company 数据已加载
+      console.log("加载");
+
+      // var map = new BMap.Map("baidu-map"); // 创建Map实例  
+      // console.log(map);
+
+      // var point = new BMap.Point(116.404, 39.915); // 创建点坐标  
+      // map.centerAndZoom(point, 15); // 初始化地图，设置中心点坐标和地图级别  
+      // map.enableScrollWheelZoom(true); // 开启滚轮放大缩小  
+    }
+  }
 }
 </script>
 

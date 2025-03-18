@@ -144,6 +144,14 @@
               </div>
               <div class="intro-content">
                 <div class="p-intro">
+                  <h3>工作地址</h3>
+                  <baidu-map class="baidu-map" :center="mapCenter" :zoom="15" style="width: 100%; height: 300px;">
+                    <bm-marker :position="mapCenter" v-if="mapCenter"></bm-marker>
+                  </baidu-map>
+                </div>
+              </div>
+              <div class="intro-content">
+                <div class="p-intro">
                   <h3>更多推荐</h3>
                   <post-app v-for="post in posts" :key="post.index" :post="post"></post-app>
                 </div>
@@ -255,7 +263,8 @@ export default {
       ],
       position: {},
       company: {},
-      posts: []
+      posts: [],
+      mapCenter: { lng: 116.404, lat: 39.915 } // 默认中心
     }
   },
   created() {
@@ -322,7 +331,7 @@ export default {
       })
         .then(function (response) {
           // 成功时，将响应数据赋值给_this.chats，并打印到控制台
-          // _this.chats = response.data;
+          _this.chats = [];
           for (var len = 0; len < response.data.length; len++) {
             const newChat = {
               index: _this.chats.length + 1,

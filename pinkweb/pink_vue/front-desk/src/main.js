@@ -6,17 +6,26 @@ import echarts from 'echarts'
 import Vuex from 'vuex' //引入状态管理
 import axios from 'axios'
 
+import BaiduMap from 'vue-baidu-map'
+
+
+
 // 公共样式
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/base.css'
 import moment from 'moment'
 import store from './store'
 Vue.prototype.$moment = moment
-Vue.prototype.$http=axios
+Vue.prototype.$http = axios
 Vue.prototype.$echarts = echarts
 Vue.use(ElementUI)
-Vue.use(Vuex) ;
+Vue.use(Vuex);
 /* eslint-disable no-new */
+
+Vue.use(BaiduMap, {
+  // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
+  ak: 'VL8nLbnhx8L09IFMrXO1sMQwi0feprx2'
+})
 
 Vue.config.productionTip = false
 
@@ -33,7 +42,7 @@ axios.interceptors.request.use(
   });
 new Vue({
   el: '#app',
-  store:store,
+  store: store,
   router,
   render: h => h(App)
 })
